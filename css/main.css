@@ -1,0 +1,52 @@
+nav {
+    background-color: #272838;
+    font-family: sans-serif !important;
+  }
+  nav a {
+    color: white !important;
+  }
+  
+  nav a:hover {
+    color: #3765f6 !important;
+  }
+  
+  .main-page {
+    background-color: #272838;
+    color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+  }
+  
+  .selectors {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 200px;
+    color: white;
+    border: solid white 5px;
+    background-color: #748cab;
+    margin: 3rem;
+    border-radius: 2rem;
+    font-size: 24px;
+  }
+  
+  .select:hover {
+    background-color: white;
+    color: #272838;
+  }
+  
+  a:hover {
+    text-decoration: none !important;
+  }
