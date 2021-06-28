@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    rel="stylesheet"
+    href="main.css"
+    />
+    <link
+    rel="stylesheet"
+    href="operations.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/product/">
+    <title>Operation 2</title>
+    <script src="tables.js"> </script>
+    <script src="hydrogen.js"> </script>
+    <script src="carbon.js"> </script>
+    <script>
+      function operation(){
+          return "OP2"
+      }
+      </script>
+    <script src="index.js"></script>
+</head>
+<script>
+    function slideDecision(slider){
+        let co2on = document.getElementById("CO2-on");
+        let co2off = document.getElementById("CO2-off");
+        if (co2on.checked){
+            console.log("on");
+            UserCarbonSelectionOnshore(slider.value);
+        }
+        if (co2off.checked){
+            console.log("off");
+            UserCarbonSelectionOffshore(slider.value);
+        }
+    }
+</script>
+<body>
+    <nav class="site-header sticky-top py-1">
+        <div class="container d-flex flex-column flex-md-row">
+            <a class="py-2 d-none d-md-inline-block mr-5" href="index.html">Home</a>
+            <a class="py-2 d-none d-md-inline-block mr-5" href="operation_1.html">Operation 1</a>
+            <a class="py-2 d-none d-md-inline-block mr-5" href="operation_2.html">Operation 2</a>
+            <a class="py-2 d-none d-md-inline-block" href="operation_3.html">Operation 3</a>
+        </div>
+      </nav>
+      <div class="operation-page">
+        <div class="wrapper">
+            <h2><b>Operation 2</b></h2>
+            <div class="scoreboard">
+                <h3><b>Effectiveness Rating</b></h3>
+                <h3 id="score">- -</h3>
+            </div>
+            <div class="group_1">
+                <button id="submit" onclick="setScore()">Submit</button>
+                <button id="optimise" onclick="handleCarbonNeutrality();">Carbon Neutrality</button>
+            </div>
+            <div class = "group_1">
+                <div class="back-box" id="method">
+                    <h3><b>Method</b></h3>
+                    <div class="radio">
+                        <div class="item">
+                            <input type="radio" id="hyd-on" name="method" value="hyd-on" onclick="UserHydrogenSelection(false);">
+                            <label for="hyd-on">Hydrogen (Onshore)</label>
+                        </div>
+                        <div class="item">
+                            <input type="radio" id="hyd-off" name="method" value="hyd-off" onclick="UserHydrogenSelection(true);">
+                            <label for="hyd-off">Hydrogen (Offshore)</label>
+                        </div>
+                        <div class="item">
+                            <input type="radio" id="decom" name="method" value="decom" onclick="decommission()">
+                            <label for="decom">Immediate Decommission</label>
+                        </div>
+                        <div class="item">
+                            <input type="radio" id="CO2-on" name="method" value="CO2-on" onclick="OptimizedCarbonOnshore()">
+                            <label for="CO2-on">CO2 Absorption (Onshore)</label>
+                        </div>
+                        <div class="item">
+                            <input type="radio" id="CO2-off" name="method" value="CO2-off" onclick="OptimizedCarbonOffshore()">
+                            <label for="CO2-off">CO2 Absorption (Offshore)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="group_2">
+                    <div class="back-box" id="outcomes">
+                        <h3><b>Outcomes</b></h3>
+                        <div class="list">
+                            <div class="item-2"> 
+                                <div class="reported-value">
+                                    <div id="co2">
+                                    </div>
+                                </div>
+                                <div>
+                                    CO2 Absorbed (Mt)
+                                </div>
+                            </div>
+                            <div class="item-2"> 
+                                <div class="reported-value">
+                                    <div id="cost">
+                                    </div>
+                                </div>
+                                <div>
+                                    Cost ($)
+                                </div>
+                            </div>
+                            <div class="item-2"> 
+                                <div class="reported-value">
+                                    <div id="budgetremaining">
+                                    </div>
+                                </div>
+                                <div>
+                                    Budget Remaining ($)
+                                </div>
+                            </div>
+                            <div class="item-2"> 
+                                <div class="reported-value">
+                                    <div id="percentageused">
+                                        
+                                    </div>
+                                </div>
+                                <div>
+                                    Percentage Used of Budget (%)
+                                </div>
+                            </div>
+                            <div class="item-2"> 
+                                <div class="reported-value">
+                                    <div id="spentonco2">
+
+                                    </div>
+                                </div>
+                                <div>
+                                    Spent on CO2 ($)
+                                </div>
+                            </div>
+                            <div class="item-2"> 
+                                <div class="reported-value">
+                                    <div id="spentondecom">
+
+                                    </div>
+                                </div>
+                                <div>
+                                    Spent on Decommission ($)
+                                </div>
+                            </div>
+                            <div class="item-2"> 
+                                <div class="reported-value">
+                                    <div id="conversiondate">
+
+                                    </div>
+                                </div>
+                                <div>
+                                    Year of Transition
+                                </div>
+                            </div>
+                            <div class="item-2"> 
+                                <div class="reported-value">
+                                    <div id="decommissiondate">
+
+                                    </div>
+                                </div>
+                                <div>
+                                    Year of Decommission
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="back-box" id="slider" style="width: 70%">
+                <h3><b>Priority</b></h3>
+                <label for="points"> Budget vs Sustainability (between 0 and 100):</label>
+                <input type="range" id="points" name="points" min="0" max="100" onchange="slideDecision(this)">
+                <span style="display:flex; justify-content: space-between;">
+                    <span>Minimise Cost</span>
+                    <span>CO2 Removed</span>
+                </span>
+            </div>
+            <div class="group_3">
+                <!-- <div class="back-box" id="decommission">
+                    <h3><b>Decommission List</b></h3>
+                    <div class="list" id="decommission-list">
+                    </div>
+                </div> -->
+                <div class="back-box" id="decommission">
+                    <h3><b>Timeline</b></h3>
+                    <div class="list" id="timeline">
+                    </div>
+                </div>
+                <div class="back-box" id="images">
+                    <img src="images/OP2.png" alt="OP2">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function changeColor(checkbox){
+    if(checkbox.checked){
+        checkbox.parentElement.classList = "";
+        checkbox.parentElement.classList = "item-3 removed";
+    }
+    else{
+        checkbox.parentElement.classList = "";
+        checkbox.parentElement.classList = "item-3 present";
+    }
+}
+    function test(){
+        // addOpComponent("test1", true);
+    }
+</script>
+</html>
