@@ -1,21 +1,21 @@
 //PLAYERCHANGEABLE-------------------------------------------------------------------
 
-      //GENOME CLASSIC
-var GENOMES_POPULATION = 2000;
+//GENOME CLASSIC
+var GENOMES_POPULATION = 70;
 var GENOMES_UNMUTATED = 5;
-var GENOMES_KILLED = 10;
+var SURVIVAL_RATE = 10; // PERCENTAGE
 
 
-      //GENOME MUTATION
+//GENOME MUTATION
 var STARTINGPOINTS = 30;
 var NUMGENERATIONS = 200;
-var NEWPOINT_MUTATION = 40;
-var MOVEPOINT_MUTATION = 50;
-var REMOVEPOINT_MUTATION = 30;
-var CLEANPOINT_MUTATION = 5;
-      
-      //AESTHETIC 
-var WAITTIME = 10;
+var NEWPOINT_MUTATION = 40; // PERCENTAGE
+var MOVEPOINT_MUTATION = 50; // PERCENTAGE
+var REMOVEPOINT_MUTATION = 30; // PERCENTAGE
+var CLEANPOINT_MUTATION = 5; // PERCENTAGE
+
+//AESTHETIC 
+var WAITTIME = 0;
 
 
 //GLOBALS----------------------------------------------------------------------------
@@ -134,26 +134,52 @@ function CreateNewPopulation() {
 
 async function GeneticAlgorithm() {
   CreateNewPopulation();
-  for (var generation = 0; generation < NUMGENERATIONS; generation++) {
+  for (var generation = 0; generation <= NUMGENERATIONS; generation++) {
+    SurvivaloftheFittest();
     MutatePopulation();
-    population.sort(function (a, b) {return a.fitness - b.fitness; });
+    population.sort(function (a, b) { return a.fitness - b.fitness; });
     document.getElementById("alg_results").innerHTML = "Generation = " + generation + ". Fitness = " + population[0].fitness + ".";
     drawAlgorithmPath(population[0].chromosomes, population[0].path, AlgorithmCanvas);
     await new Promise(r => setTimeout(r, WAITTIME)); ///??? sure
   }
 }
 
+function SurvivaloftheFittest() {
+  //Kills of SURVIVAL_RATE, breeds remaining genomes
+  console.log(population.length);
+  var survivalIndex = parseInt(population.length * (SURVIVAL_RATE / 100));
+  population.splice(survivalIndex, population.length - survivalIndex);
+  for (var i = population.length; i < GENOMES_POPULATION; i++) {
+    var newChromosomes = [];
+    var mother = Math.floor(Math.random() * (survivalIndex));
+    var father = Math.floor(Math.random() * (survivalIndex));
+    for (var j = 0; j < population[mother].chromosomes.length; j++) {
+      if (Math.floor(Math.random() * (101)) > 50) {
+        newChromosomes.push([...population[mother].chromosomes[j]]);
+      }
+    }
+    for (var j = 0; j < population[father].chromosomes.length; j++) {
+      if (Math.floor(Math.random() * (101)) > 50) {
+        newChromosomes.push([...population[father].chromosomes[j]]);
+      }
+    }
+    var genome = new Genome();
+    genome.chromosomes = [...newChromosomes];
+    population.push(genome);
+  }
+  console.log(population.length);
+}
 
 function MutatePopulation() {
   for (var i = GENOMES_UNMUTATED; i < population.length; i++) {
     var genome = population[i];
-    if(genome.chromosomes.length == 0 || Math.floor(Math.random() * 101) < NEWPOINT_MUTATION) {
+    if (genome.chromosomes.length == 0 || Math.floor(Math.random() * 101) < NEWPOINT_MUTATION) {
       newPointMutation(genome);
     }
-    if(Math.floor(Math.random() * 101) < REMOVEPOINT_MUTATION){
+    if (Math.floor(Math.random() * 101) < REMOVEPOINT_MUTATION) {
       removePointMutation(genome);
     }
-    if(Math.floor(Math.random() * 101) <CLEANPOINT_MUTATION){
+    if (Math.floor(Math.random() * 101) < CLEANPOINT_MUTATION) {
 
     }
     var updatedResults = prims(genome.chromosomes);
@@ -162,8 +188,8 @@ function MutatePopulation() {
   }
 }
 
-function removePointMutation(genome){
-  genome.chromosomes.splice(Math.floor(Math.random() * (genome.chromosomes.length + 1)),1);
+function removePointMutation(genome) {
+  genome.chromosomes.splice(Math.floor(Math.random() * (genome.chromosomes.length + 1)), 1);
 }
 
 
