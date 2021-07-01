@@ -22,7 +22,7 @@
 	 top: 0;
 	 bottom: 0;
 	 width: 17.5em;
-	 background: #35302d !important;
+	 background: #35302d;
 }
  .logo {
 	 text-transform: lowercase;
@@ -61,8 +61,7 @@
 	 color: #dfdbd9;
 	 font: 400 1.125em 'Source Sans Pro', Helvetica, Arial, sans-serif;
 	 text-align: center;
-	 text-transform: lowercase;
-}
+ }
  .main-nav a:hover {
 	 color: #3765f6 ;
 }
@@ -113,21 +112,6 @@
 	 left: 0;
 }
 
-/* custom css site wide*/
-.main-page {
-    background-color: #D8D0C1;
-    color: white;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: sans-serif;
-  }
-  
-  a:hover {
-    text-decoration: none !important;
-  }
  
 
  
