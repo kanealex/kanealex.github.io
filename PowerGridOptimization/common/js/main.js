@@ -2,7 +2,6 @@
 
 //GENOME CLASSIC
 var GENOMES_POPULATION = 70;
-var GENOMES_UNMUTATED = 5;
 var SURVIVAL_RATE = 10; // PERCENTAGE
 
 
@@ -12,7 +11,7 @@ var NUMGENERATIONS = 200;
 var NEWPOINT_MUTATION = 40; // PERCENTAGE
 var MOVEPOINT_MUTATION = 50; // PERCENTAGE
 var REMOVEPOINT_MUTATION = 30; // PERCENTAGE
-var CLEANPOINT_MUTATION = 5; // PERCENTAGE
+var MUTATIONMOVE_SIZE = 1;
 
 //AESTHETIC 
 var WAITTIME = 0;
@@ -146,7 +145,7 @@ async function GeneticAlgorithm() {
 
 function SurvivaloftheFittest() {
   //Kills of SURVIVAL_RATE, breeds remaining genomes
-  console.log(population.length);
+  //console.log(population.length);
   var survivalIndex = parseInt(population.length * (SURVIVAL_RATE / 100));
   population.splice(survivalIndex, population.length - survivalIndex);
   for (var i = population.length; i < GENOMES_POPULATION; i++) {
@@ -167,11 +166,11 @@ function SurvivaloftheFittest() {
     genome.chromosomes = [...newChromosomes];
     population.push(genome);
   }
-  console.log(population.length);
+  //console.log(population.length);
 }
 
 function MutatePopulation() {
-  for (var i = GENOMES_UNMUTATED; i < population.length; i++) {
+  for (var i = 0; i < population.length; i++) {
     var genome = population[i];
     if (genome.chromosomes.length == 0 || Math.floor(Math.random() * 101) < NEWPOINT_MUTATION) {
       newPointMutation(genome);
@@ -179,8 +178,8 @@ function MutatePopulation() {
     if (Math.floor(Math.random() * 101) < REMOVEPOINT_MUTATION) {
       removePointMutation(genome);
     }
-    if (Math.floor(Math.random() * 101) < CLEANPOINT_MUTATION) {
-
+    if (Math.floor(Math.random() * 101) < MOVEPOINT_MUTATION && genome.chromosomes.length > 0) {
+      movePointMutatation(genome);
     }
     var updatedResults = prims(genome.chromosomes);
     genome.path = [...updatedResults.path]; //maybe need a deepcopy ig?
@@ -188,10 +187,25 @@ function MutatePopulation() {
   }
 }
 
+function movePointMutatation(genome) {
+  let pointindex = Math.floor(Math.random() * genome.chromosomes.length);
+  //console.log("length of array = "+ genome.chromosomes.length);
+  //console.log("point index=" +pointindex)
+  let angle = Math.floor(Math.random() * 361);
+  //console.log("OLD POINT = "+genome.chromosomes[pointindex]);
+  let x = genome.chromosomes[pointindex][0] + MUTATIONMOVE_SIZE*Math.sin(angle * (Math.PI / 180));
+  if (x >= width) { x = width; }
+  else if (x <= 0) { x = 0; }
+  let y = genome.chromosomes[pointindex][1] + MUTATIONMOVE_SIZE*Math.cos(angle * (Math.PI / 180));
+  if (y >= width) { y = width; }
+  else if (y <= 0) { y = 0; }
+  genome.chromosomes[pointindex] = [x,y];
+  //console.log("NEW POINT = "+genome.chromosomes[pointindex]+'\n');
+}
+
 function removePointMutation(genome) {
   genome.chromosomes.splice(Math.floor(Math.random() * (genome.chromosomes.length + 1)), 1);
 }
-
 
 function newPointMutation(genome) {
   var [x, y] = [Math.floor(Math.random() * (width + 1)), Math.floor(Math.random() * (height + 1))];

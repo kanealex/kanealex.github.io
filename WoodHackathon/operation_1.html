@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-    rel="stylesheet"
-    href="../common/css/main.css"
-    />
-    <link
-    rel="stylesheet"
-    href="common/css/operations.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/product/">
-    <title>Operation 1</title>
-    <script src="common/js/tables.js"> </script>
-    <script src="common/js/hydrogen.js"> </script>
-    <script src="common/js/carbon.js"> </script>
-    <script>
-    function operation(){
-        return "OP1"
-    }
-    </script>
-    <script src="common/js/index.js"></script>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="main stylesheet" href="../common/css/main.css" />
+        <link rel="wood stylesheet" href="common/css/main.css" />
+        <link
+        rel="stylesheet"
+        href="common/css/operations.css"
+        />
+        <link rel="bootstrap stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+        <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
+        </script>
+        <script src="common/js/tables.js"> </script>
+        <script src="common/js/hydrogen.js"> </script>
+        <script src="common/js/carbon.js"> </script>
+        <script>
+            function operation(){
+                return "OP1"
+            }
+            </script>
+            <script src="common/js/index.js"></script>
+        <script>
+            $(function () {
+                $("#sidebar").load("../sidebar.html");
+            });
+        </script>
 <script>
     function slideDecision(slider){
         let co2on = document.getElementById("CO2-on");
@@ -42,8 +42,10 @@
         }
     }
 </script>
+</head>
 <body>
-    <nav class="site-header sticky-top py-1">
+    <div id="sidebar"></div>
+    <nav id = "woodnav" class="site-header sticky-top py-1">
         <div class="container d-flex flex-column flex-md-row">
             <a class="py-2 d-none d-md-inline-block mr-5" href="index.html">Home</a>
             <a class="py-2 d-none d-md-inline-block mr-5" href="operation_1.html">Operation 1</a>
@@ -213,8 +215,5 @@
         checkbox.parentElement.classList = "item-3 present";
     }
 }
-    function test(){
-        // addOpComponent("test1", true);
-    }
 </script>
 </html>
