@@ -42,6 +42,7 @@
 
  .logo a:hover {
 	 color: #fff;
+	 text-decoration: none;
 }
  .logo a:hover span {
 	 color: #df4500;
@@ -63,13 +64,14 @@
 	 text-align: center;
  }
  .main-nav a:hover {
-	 color: #3765f6 ;
+	text-decoration: none;
+	color: #df4500;
 }
  .social-links {
 	 border-bottom: solid 1px #3c3735;
 }
  .social-links li {
-	 width: 25%;
+	 width: 50%;
 	 border-left: solid 1px #3c3735;
 }
  .social-links li:first-child {
@@ -77,13 +79,13 @@
 }
  .social-links a {
 	 display: block;
-	 height: 5.5em;
+	 height: auto;
 	 text-align: center;
-	 color: #3c3735;
-	 font: 0.75em/5.5em 'Source Sans Pro', Helvetica, Arial, sans-serif;
+	 color: #dfdbd9;
+	 font-size: 40px;
 }
  .social-links a:hover {
-	 color: #dfdbd9;
+	 color: #df4500;
 }
  .list-hover-slide li {
 	 position: relative;
