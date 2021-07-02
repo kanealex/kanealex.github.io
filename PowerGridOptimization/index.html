@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="main stylesheet" href="../common/css/main.css" />
-  <link rel="sidebar stylesheet" href="../common/css/sidebar.css" />
+  <link rel="sidebar stylesheet" href="../common/css/style.css" />
   <link rel="powergrid stylesheet" href="common/css/main.css" />
   <link rel="bootstrap stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -20,22 +20,118 @@
 
 <body class="main-page" onload="main()">
   <div id="sidebar"></div>
-  <div class="fluid-container">
-  <h1>Genetic Algorithm</h1>
-  <h4 style = " color: white">Still Under Construction! For partial results press the space/enter keys! Full research project found at github.com/kanealex ~this is just a port to javascript</h4>
-  <h2 id ="startingresults"><br>Starting Path Length is: </h2>
-</div>
 
-  <div class="grid-container">
+<!--HEADER-->
+  <div class="fluid-container">
+    <h1>Genetic Algorithm</h1>
+  </div>
+
+<!--NAVBAR-->
+  <div class="layout">
+    <input name="nav" type="radio" class="nav home-radio" id="home" checked="checked" />
+    <div class="page home-page">
+      <!--Game Page-->
+      <div class="page-contents">
+        <div class="game-data">
+          <h2>Try and Beat the Algorithm! Click to Place points to reduce the path length, then click the play button to see how many generations it took to beat your</h2>
+        </div>
+        <div class="grid-container canvas-container">
+          <div>
+            <h1>Your Canvas</h1>
+            <h2 id="player_results"></h2>
+            <canvas width="500" height="500" id="playercanvas">
+            </canvas>
+            <h2 id="startingresults">Starting Path Length: </h2>
+          </div>
+
+          <div class="or-spacer">
+            <span><i class="fa fa-info-circle" style="font-size:24px; color: white"></i></span>
+          </div>
+
+          <div>
+            <h1>Algorithm Canvas</h1>
+            <h2 id="alg_results">Current Fitness: - pixels. </h2>
+            <canvas width="500" height="500" id="algorithmcanvas">
+            </canvas>
+            <h2 id="alg_results2">Generation: 0.</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label class="nav" for="home">
+      <span>
+        Fight the Algorithm
+      </span>
+    </label>
+    <input name="nav" type="radio" class="about-radio" id="about" />
+    <div class="page about-page">
+      <!--About Page-->
+      <div class="page-contents">
+        <h1>About</h1>
+        <p>Amet consectetur adipisicing elit. Sed ipsam ad exercitationem, quo quae ullam, quidem laudantium corporis
+          quis minima debitis nesciunt repellat. Quos dolore ex quis voluptas, minus ut?</p>
+      </div>
+    </div>
+    <label class="nav" for="about">
+      <span>
+        Edit the Algorithm
+      </span>
+    </label>
+
+    <input name="nav" type="radio" class="contact-radio" id="contact" />
+    <div class="page contact-page">
+      <div class="page-contents">
+        <h1>Contact</h1>
+        <p>Eaque accusamus magnam error unde nam, atque provident omnis fugiat quam necessitatibus vel nulla sed
+          quibusdam fuga veritatis assumenda alias quidem asperiores?</p>
+        <p><a href="#">Get in touch</a></p>
+      </div>
+    </div>
+    <label class="nav" for="contact">
+      <span>
+        Learn How it Works
+      </span>
+
+    </label>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!--
+  <h2 id ="startingresults"><br>Starting Path Length is: </h2>
+  <div class="grid-container canvas-container">
     <div><h1>Your Canvas</h1>
-      <h2 id="player_results">Current Fitness: </h2>
+      <h2 id="player_results"></h2>
       <canvas width="500" height="500" id="playercanvas">
       </canvas>
     </div>
+
     <div class="or-spacer">
-      <div class="mask"></div>
-        <span><i>VS</i></span>
+        <span><i class="fa fa-info-circle" style="font-size:24px; color: white"></i></span>
     </div>
+
     <div><h1>Algorithm Canvas</h1>
       <h2 id="alg_results">Current Fitness: - pixels. </h2> 
       <canvas width="500" height="500" id="algorithmcanvas">
@@ -45,4 +141,22 @@
     </div>
   </div>
 
-  <script src="common/js/main.js"> </script>
+  <div class="footer">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="footer-info">
+                <h2>Kane Alexander</h2>
+                <div class="footer-menu">
+                    <p>0474131119</p>
+                    <p>kanealexander3@gmail.com</p>
+                    <a href="https://www.linkedin.com/in/kane-alexander-08131b216/">
+                        <p>LinkedIn</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+</body>
+<script src="common/js/main.js"> </script>
