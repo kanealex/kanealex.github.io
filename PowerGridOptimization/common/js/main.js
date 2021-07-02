@@ -40,8 +40,8 @@ document.body.onkeyup = function (e) {
 function initializePoints() {
   for (var i = 0; i < STARTINGPOINTS; i++) {
     var [x, y] = [Math.floor(Math.random() * (width + 1)), Math.floor(Math.random() * (height + 1))];
-    drawPoint(x, y, "blue", PlayerCanvas);
-    drawPoint(x, y, "blue", AlgorithmCanvas);
+    drawPoint(x, y, "white", PlayerCanvas);
+    drawPoint(x, y, "white", AlgorithmCanvas);
     startingVertices.push([x, y]);
   }
 }
@@ -79,7 +79,8 @@ function connectPoints(start, end, canvas) {
 function drawPoint(x, y, colour, canvas) {
   var ctx = canvas.getContext("2d");
   ctx.beginPath();
-  ctx.rect(x - 2.5, y - 2.5, 5, 5);
+  //ctx.rect(x - 2.5, y - 2.5, 5, 5);
+  ctx.arc(x, y, 5, 0, 2 * Math.PI);
   ctx.fillStyle = colour;
   ctx.fill();
 }
@@ -108,7 +109,7 @@ function resetCanvas(canvas) {
   var ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (var i = 0; i < startingVertices.length; i++) {
-    drawPoint(startingVertices[i][0], startingVertices[i][1], "blue", canvas);
+    drawPoint(startingVertices[i][0], startingVertices[i][1], "white", canvas);
   }
 }
 

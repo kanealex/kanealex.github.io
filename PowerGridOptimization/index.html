@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="main stylesheet" href="../common/css/main.css" />
-        <link rel="sidebar stylesheet" href="../common/css/sidebar.css" />
-        <link rel="powergrid stylesheet" href="common/css/main.css"/>
-        <link rel="bootstrap stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(function () {
-                $("#sidebar").load("sidebar.html");
-            });
-        </script>
-    </head>
-    
-<body class = "main-page" onload="main()">
-    <div id="sidebar"></div>
-    <h1>Still Under Construction! For partial results press the space/enter keys!</h1> 
-    <h2>Full research project found at github.com/kanealex ~this is just a port to javascript</h2>
-    <p id= "player_results">Results for Player</p>  
-    <canvas width = "500" height="500"   style="background-color: green" id = "playercanvas">
-    </canvas>
-    <p id= "alg_results">Results for Genetic Algorithm</p>
-    <canvas width="500" height="500"
-        style="background-color: green" id = "algorithmcanvas">
-    </canvas>
 
-</body>
-<script src="common/js/main.js"> </script>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="main stylesheet" href="../common/css/main.css" />
+  <link rel="sidebar stylesheet" href="../common/css/sidebar.css" />
+  <link rel="powergrid stylesheet" href="common/css/main.css" />
+  <link rel="bootstrap stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(function () {
+      $("#sidebar").load("sidebar.html");
+    });
+  </script>
+</head>
+
+<body class="main-page" onload="main()">
+  <div id="sidebar"></div>
+  <div class="fluid-container">
+  <h1>Genetic Algorithm</h1>
+  <h2>Still Under Construction! For partial results press the space/enter keys! Full research project found at github.com/kanealex ~this is just a port to javascript</h2>
+</div>
+
+  <div class="grid-container">
+    <div><h1>Your Canvas</h1>
+      <p id="player_results">Results for Player</p>
+      <canvas width="500" height="500" id="playercanvas">
+      </canvas></div>
+    <div class="or-spacer">
+      <div class="mask"></div>
+        <span><i>VS</i></span>
+    </div>
+    <div><h1>Algorithm Canvas</h1>
+      <p id="alg_results">Results for Genetic Algorithm</p>
+      <canvas width="500" height="500" id="algorithmcanvas">
+      </canvas></div>
+  </div>
+
+  <script src="common/js/main.js"> </script>

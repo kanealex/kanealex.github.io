@@ -1,10 +1,78 @@
 .main-page{
     margin-left: 17.5em;
-    background-color: #D8D0C1;
+    background-color:#D8D0C1 ;
 }
 
 body {
     color: #101935;
     background: #D8D0C1;
     font-family: 'Montserrat', sans-serif;
+}
+
+/*HEADER ATTRIBUTES*/
+.fluid-container{
+    background-color:#101935 ;
+    padding: 50px;
+}
+.fluid-container h1 {
+    color: whitesmoke;
+    font-size: 60px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.fluid-container h2 {
+    color: whitesmoke;
+    font-size: 30px;
+    font-weight: 50;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/*CANVAS ATTRIBUTES*/
+.grid-container {
+    background: linear-gradient(#101935, #101935) no-repeat center/4px 100%;
+    display: grid;
+    justify-content: space-evenly;
+    grid-template-columns: auto 10px auto;
+    height: 100%;
+  }
+  .grid-container h1{
+    text-align: center;
+  }
+  canvas{
+    background-color: #2e6409;
+  }
+
+  /*divider css*/
+
+.or-spacer {
+  display: block;
+  height: 100%;
+  position: relative;
+}
+
+
+.or-spacer span {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: -25px;
+  left: 50%;
+  margin-left: -25px;
+  top: 100px;
+  border-radius: 100%;
+  background: #101935;
+}
+.or-spacer span i {
+  display: inline-block;
+  border-radius: 100%;
+  text-align: center;
+  width: 100%;
+  line-height: 50px;
+  font-style: normal;
+  color: white;
 }
