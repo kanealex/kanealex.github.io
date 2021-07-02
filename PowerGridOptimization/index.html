@@ -22,22 +22,27 @@
   <div id="sidebar"></div>
   <div class="fluid-container">
   <h1>Genetic Algorithm</h1>
-  <h2>Still Under Construction! For partial results press the space/enter keys! Full research project found at github.com/kanealex ~this is just a port to javascript</h2>
+  <h4 style = " color: white">Still Under Construction! For partial results press the space/enter keys! Full research project found at github.com/kanealex ~this is just a port to javascript</h4>
+  <h2 id ="startingresults"><br>Starting Path Length is: </h2>
 </div>
 
   <div class="grid-container">
     <div><h1>Your Canvas</h1>
-      <p id="player_results">Results for Player</p>
+      <h2 id="player_results">Current Fitness: </h2>
       <canvas width="500" height="500" id="playercanvas">
-      </canvas></div>
+      </canvas>
+    </div>
     <div class="or-spacer">
       <div class="mask"></div>
         <span><i>VS</i></span>
     </div>
     <div><h1>Algorithm Canvas</h1>
-      <p id="alg_results">Results for Genetic Algorithm</p>
+      <h2 id="alg_results">Current Fitness: - pixels. </h2> 
       <canvas width="500" height="500" id="algorithmcanvas">
-      </canvas></div>
+      </canvas>
+      <h2 id="alg_results2">Generation: 0.</h2>
+      
+    </div>
   </div>
 
   <script src="common/js/main.js"> </script>

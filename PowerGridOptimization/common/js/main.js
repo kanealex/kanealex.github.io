@@ -27,12 +27,12 @@ var playerVertices = [];
 var population = [];
 
 //INITIALIZING FUNCTIONS-------------------------------------------------------------
-document.body.onkeyup = function (e) {
-  if (e.keyCode == 13) {//spacebar
+document.body.onkeyup = function (event) {
+  if (event.keyCode == 13) {//enter
     GeneticAlgorithm();
-  } else if (e.keyCode == 32) {
+  } else if (event.keyCode == 32) {//spacebar
     calculatePlayerResults();
-  } else if (e.keyCode == 27) {
+  } else if (event.keyCode == 27) {//esc
     location.reload();
   }
 }
@@ -50,21 +50,44 @@ function initializePoints() {
 function calculatePlayerResults() {
   results = prims(playerVertices);
   drawPlayerPath(playerVertices, results.path, PlayerCanvas);
-  document.getElementById("player_results").innerHTML = "Fitness = " + results.fitness + ".";
+  document.getElementById("player_results").innerHTML = "Current Fitness: " +Math.round(results.fitness * 100) / 100 + " pixels.";
+  return results.fitness;
 }
 
-PlayerCanvas.addEventListener("mousedown", function (e) {
-  var [x, y] = getMousePosition(PlayerCanvas, e);
-  drawPoint(x, y, "red", PlayerCanvas)
-  playerVertices.push([x, y]);
-});
+PlayerCanvas.addEventListener("mouseup", function (e) {
+  if (typeof e === 'object') {
+    switch (e.button) {
+      case 0:
+        var [x, y] = getMousePosition(PlayerCanvas, e);
+        drawPoint(x, y, "", PlayerCanvas)
+        playerVertices.push([x, y]);
+        calculatePlayerResults();
+        return;
+
+      case 2:
+        if(playerVertices.length>0){
+          var [x, y] = getMousePosition(PlayerCanvas, e);
+          for(var i = 0; i<playerVertices.length;i++){
+            if(5>Math.hypot(playerVertices[i][0] - x, playerVertices[i][1] - y)){
+              removePoint(i);
+              calculatePlayerResults();
+              return;
+            }
+          }
+        }
+      }
+      }
+    });
+
+PlayerCanvas.addEventListener('contextmenu', event => event.preventDefault());
+
 
 //CANVAS FUNCTIONS-------------------------------------------------------------------
 function getMousePosition(canvas, event) {
   let rect = canvas.getBoundingClientRect();
   let x = event.clientX - rect.left;
   let y = event.clientY - rect.top;
-  console.log(x, y);
+  //console.log(x, y);
   return [x, y]
 }
 
@@ -79,10 +102,13 @@ function connectPoints(start, end, canvas) {
 function drawPoint(x, y, colour, canvas) {
   var ctx = canvas.getContext("2d");
   ctx.beginPath();
-  //ctx.rect(x - 2.5, y - 2.5, 5, 5);
   ctx.arc(x, y, 5, 0, 2 * Math.PI);
   ctx.fillStyle = colour;
   ctx.fill();
+}
+
+function removePoint(index){
+  playerVertices.splice(index,1);
 }
 
 function drawPlayerPath(extrapoints, path, canvas) {
@@ -138,7 +164,8 @@ async function GeneticAlgorithm() {
     SurvivaloftheFittest();
     MutatePopulation();
     population.sort(function (a, b) { return a.fitness - b.fitness; });
-    document.getElementById("alg_results").innerHTML = "Generation = " + generation + ". Fitness = " + population[0].fitness + ".";
+    document.getElementById("alg_results").innerHTML = "Current Fitness: " + Math.round(population[0].fitness * 100) / 100 + " pixels.";
+    document.getElementById("alg_results2").innerHTML = "Generation: " + generation + ".";
     drawAlgorithmPath(population[0].chromosomes, population[0].path, AlgorithmCanvas);
     await new Promise(r => setTimeout(r, WAITTIME)); ///??? sure
   }
@@ -194,13 +221,13 @@ function movePointMutatation(genome) {
   //console.log("point index=" +pointindex)
   let angle = Math.floor(Math.random() * 361);
   //console.log("OLD POINT = "+genome.chromosomes[pointindex]);
-  let x = genome.chromosomes[pointindex][0] + MUTATIONMOVE_SIZE*Math.sin(angle * (Math.PI / 180));
+  let x = genome.chromosomes[pointindex][0] + MUTATIONMOVE_SIZE * Math.sin(angle * (Math.PI / 180));
   if (x >= width) { x = width; }
   else if (x <= 0) { x = 0; }
-  let y = genome.chromosomes[pointindex][1] + MUTATIONMOVE_SIZE*Math.cos(angle * (Math.PI / 180));
+  let y = genome.chromosomes[pointindex][1] + MUTATIONMOVE_SIZE * Math.cos(angle * (Math.PI / 180));
   if (y >= width) { y = width; }
   else if (y <= 0) { y = 0; }
-  genome.chromosomes[pointindex] = [x,y];
+  genome.chromosomes[pointindex] = [x, y];
   //console.log("NEW POINT = "+genome.chromosomes[pointindex]+'\n');
 }
 
@@ -260,6 +287,7 @@ function prims(points) {
 
 function main() {
   initializePoints();
+  document.getElementById("startingresults").innerHTML += Math.round(calculatePlayerResults() * 100) / 100 + " pixels.";
 }
 
 

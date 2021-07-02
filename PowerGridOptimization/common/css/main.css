@@ -45,7 +45,10 @@ body {
   canvas{
     background-color: #2e6409;
   }
-
+  .grid-container h2{
+      text-align: center;
+      width: 500px;
+  }
   /*divider css*/
 
 .or-spacer {
