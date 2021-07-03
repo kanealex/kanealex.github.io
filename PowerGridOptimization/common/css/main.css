@@ -178,46 +178,6 @@ canvas{
 Algorithm Run Button
 ***/
 
-.draw-border {
-  box-shadow: inset 0 0 0 4px #dd3939;
-  color: #dd3939;
-  transition: color 0.25s 0.0833333333s;
-  position: relative;
-}
-.draw-border::before, .draw-border::after {
-  border: 0 solid transparent;
-  box-sizing: border-box;
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  width: 0;
-  height: 0;
-  bottom: 0;
-  right: 0;
-}
-.draw-border::before {
-  border-bottom-width: 4px;
-  border-left-width: 4px;
-}
-.draw-border::after {
-  border-top-width: 4px;
-  border-right-width: 4px;
-}
-.draw-border:hover {
-  color: #64c722;
-}
-.draw-border:hover::before, .draw-border:hover::after {
-  border-color: #64c722;
-  transition: border-color 0s, width 0.25s, height 0.25s;
-  width: 100%;
-  height: 100%;
-}
-.draw-border:hover::before {
-  transition-delay: 0s, 0s, 0.25s;
-}
-.draw-border:hover::after {
-  transition-delay: 0s, 0.25s, 0s;
-}
 
 #runalg {
   background: #101935;
@@ -238,7 +198,7 @@ Algorithm Run Button
   text-align: center;
   max-width: 150px;
   background-color: #101935;
-  margin-top: 13vw;
+  margin-top: 5vw;
   color: white;
 }
 

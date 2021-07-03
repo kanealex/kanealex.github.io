@@ -6,7 +6,7 @@ var SURVIVAL_RATE = 10; // PERCENTAGE
 
 
 //GENOME MUTATION
-var STARTINGPOINTS = 30;
+var STARTINGPOINTS = 10;
 var NUMGENERATIONS = 200;
 var NEWPOINT_MUTATION = 40; // PERCENTAGE
 var MOVEPOINT_MUTATION = 50; // PERCENTAGE
@@ -39,12 +39,16 @@ document.body.onkeyup = function (event) {
 }
 
 function initializePoints() {
+  startingVertices.splice(0,startingVertices.length);
+  resetCanvas(AlgorithmCanvas);
+  resetCanvas(PlayerCanvas);
   for (var i = 0; i < STARTINGPOINTS; i++) {
     var [x, y] = [Math.floor(Math.random() * (width + 1)), Math.floor(Math.random() * (height + 1))];
     drawPoint(x, y, "white", PlayerCanvas);
     drawPoint(x, y, "white", AlgorithmCanvas);
     startingVertices.push([x, y]);
   }
+  document.getElementById("startingresults").innerHTML ="Starting Path Length: "+ Math.round(calculatePlayerResults() * 100) / 100 + " pixels.";
 }
 
 //PLAYER FUNCTIONS-------------------------------------------------------------------
@@ -60,6 +64,7 @@ PlayerCanvas.addEventListener("mouseup", function (e) {
   if (typeof e === 'object') {
     switch (e.button) {
       case 0:
+        document.getElementById('runalg').style.boxShadow = "0 0 50px green";
         var [x, y] = getMousePosition(PlayerCanvas, e);
         drawPoint(x, y, "", PlayerCanvas)
         playerVertices.push([x, y]);
@@ -305,7 +310,7 @@ function prims(points) {
 
 function main() {
   initializePoints();
-  document.getElementById("startingresults").innerHTML += Math.round(calculatePlayerResults() * 100) / 100 + " pixels.";
+  
 }
 
 
