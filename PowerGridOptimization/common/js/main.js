@@ -1,7 +1,7 @@
 //PLAYERCHANGEABLE-------------------------------------------------------------------
 
 //GENOME CLASSIC
-var GENOMES_POPULATION = 70;
+var GENOMES_POPULATION = 10;
 var SURVIVAL_RATE = 10; // PERCENTAGE
 
 
@@ -25,15 +25,16 @@ var height = PlayerCanvas.getBoundingClientRect().height;
 var startingVertices = [];
 var playerVertices = [];
 var population = [];
+var playerscore;
 
 //INITIALIZING FUNCTIONS-------------------------------------------------------------
 document.body.onkeyup = function (event) {
   if (event.keyCode == 13) {//enter
-    GeneticAlgorithm();
+   // GeneticAlgorithm();
   } else if (event.keyCode == 32) {//spacebar
-    calculatePlayerResults();
+    //calculatePlayerResults();
   } else if (event.keyCode == 27) {//esc
-    location.reload();
+    //location.reload();
   }
 }
 
@@ -51,6 +52,7 @@ function calculatePlayerResults() {
   results = prims(playerVertices);
   drawPlayerPath(playerVertices, results.path, PlayerCanvas);
   document.getElementById("player_results").innerHTML = "Current Fitness: " +Math.round(results.fitness * 100) / 100 + " pixels.";
+  playerscore = results.fitness;
   return results.fitness;
 }
 
@@ -138,7 +140,15 @@ function resetCanvas(canvas) {
     drawPoint(startingVertices[i][0], startingVertices[i][1], "white", canvas);
   }
 }
-
+function fightResults(generation) {
+  if(generation == -1){//player beat algorithm
+    document.getElementById('finalresults').innerHTML = "You Won!";
+    $("#finalresults").fadeIn("slow");
+  }else{//algorithm beat player
+    document.getElementById('finalresults').innerHTML =  "Algorithm Won <br> <p> You survived: "+ generation +" generations.<p>";
+    $("#finalresults").fadeIn("slow");
+  }
+}
 
 //GENETIC ALGORITHM---------------------------------------------------------------------
 class Genome {
@@ -160,6 +170,7 @@ function CreateNewPopulation() {
 
 async function GeneticAlgorithm() {
   CreateNewPopulation();
+  var results = true;
   for (var generation = 0; generation <= NUMGENERATIONS; generation++) {
     SurvivaloftheFittest();
     MutatePopulation();
@@ -168,6 +179,14 @@ async function GeneticAlgorithm() {
     document.getElementById("alg_results2").innerHTML = "Generation: " + generation + ".";
     drawAlgorithmPath(population[0].chromosomes, population[0].path, AlgorithmCanvas);
     await new Promise(r => setTimeout(r, WAITTIME)); ///??? sure
+    //console.log("popfitness = "+Math.round(population[0].fitness * 100)/100+"player results = "+playerscore);
+    if(Math.round(population[0].fitness * 100)/100 < playerscore && results){
+      results = false;
+      //console.log("printed results");
+      fightResults(generation);
+    }else if (generation == NUMGENERATIONS && results){
+      fightResults(-1);
+    }
   }
 }
 
@@ -194,7 +213,6 @@ function SurvivaloftheFittest() {
     genome.chromosomes = [...newChromosomes];
     population.push(genome);
   }
-  //console.log(population.length);
 }
 
 function MutatePopulation() {
@@ -210,7 +228,7 @@ function MutatePopulation() {
       movePointMutatation(genome);
     }
     var updatedResults = prims(genome.chromosomes);
-    genome.path = [...updatedResults.path]; //maybe need a deepcopy ig?
+    genome.path = [...updatedResults.path]; //maybe need a deepcopy
     genome.fitness = updatedResults.fitness;
   }
 }

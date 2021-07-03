@@ -16,6 +16,18 @@
       $("#sidebar").load("sidebar.html");
     });
   </script>
+  <style>
+
+
+
+  </style>
+  <script>
+  $(document).ready(function(){
+  $("#runalg").click(function(){
+    $("#runalg").fadeOut("slow");
+  });
+});
+  </script>
 </head>
 
 <body class="main-page" onload="main()">
@@ -33,7 +45,11 @@
       <!--Game Page-->
       <div class="page-contents">
         <div class="game-data">
-          <h2>Try and Beat the Algorithm! Click to Place points to reduce the path length, then click the play button to see how many generations it took to beat your</h2>
+          <h1>Fight the Algorithm! </h1> 
+          <h2>Reduce your path length by adding extra points, then click the play button to compare to the algorithm!</h2>
+            
+            
+            <h3>Controls: to Place points to reduce the path length, then click the play button to see how many generations it took to beat your</h3>
         </div>
         <div class="grid-container canvas-container">
           <div>
@@ -45,9 +61,11 @@
           </div>
 
           <div class="or-spacer">
-            <span><i class="fa fa-info-circle" style="font-size:24px; color: white"></i></span>
+            <button class="btn draw-border" id="runalg" onclick= "GeneticAlgorithm();">Submit and Fight</button>
+            <div style= "display:none;" id= "finalresults">ok</div>
+            <span style= "margin-top: 15vw;" onclick= "location.reload();"><i class="fas fa-redo" style="font-size:24px; color: white"></i></span>
           </div>
-
+          
           <div>
             <h1>Algorithm Canvas</h1>
             <h2 id="alg_results">Current Fitness: - pixels. </h2>
