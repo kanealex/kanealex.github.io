@@ -17,143 +17,6 @@ var MUTATIONMOVE_SIZE = 1;
 var WAITTIME = 0;
 
 
-//GLOBALS----------------------------------------------------------------------------
-var PlayerCanvas = document.getElementById("playercanvas");
-var AlgorithmCanvas = document.getElementById("algorithmcanvas");
-var width = PlayerCanvas.getBoundingClientRect().width;
-var height = PlayerCanvas.getBoundingClientRect().height;
-var startingVertices = [];
-var playerVertices = [];
-var population = [];
-var playerscore;
-
-//INITIALIZING FUNCTIONS-------------------------------------------------------------
-document.body.onkeyup = function (event) {
-  if (event.keyCode == 13) {//enter
-   // GeneticAlgorithm();
-  } else if (event.keyCode == 32) {//spacebar
-    //calculatePlayerResults();
-  } else if (event.keyCode == 27) {//esc
-    //location.reload();
-  }
-}
-
-function initializePoints() {
-  startingVertices.splice(0,startingVertices.length);
-  resetCanvas(AlgorithmCanvas);
-  resetCanvas(PlayerCanvas);
-  for (var i = 0; i < STARTINGPOINTS; i++) {
-    var [x, y] = [Math.floor(Math.random() * (width + 1)), Math.floor(Math.random() * (height + 1))];
-    drawPoint(x, y, "white", PlayerCanvas);
-    drawPoint(x, y, "white", AlgorithmCanvas);
-    startingVertices.push([x, y]);
-  }
-  document.getElementById("startingresults").innerHTML ="Starting Path Length: "+ Math.round(calculatePlayerResults() * 100) / 100 + " pixels.";
-}
-
-//PLAYER FUNCTIONS-------------------------------------------------------------------
-function calculatePlayerResults() {
-  results = prims(playerVertices);
-  drawPlayerPath(playerVertices, results.path, PlayerCanvas);
-  document.getElementById("player_results").innerHTML = "Current Fitness: " +Math.round(results.fitness * 100) / 100 + " pixels.";
-  playerscore = results.fitness;
-  return results.fitness;
-}
-
-PlayerCanvas.addEventListener("mouseup", function (e) {
-  if (typeof e === 'object') {
-    switch (e.button) {
-      case 0:
-        document.getElementById('runalg').style.boxShadow = "0 0 50px green";
-        var [x, y] = getMousePosition(PlayerCanvas, e);
-        drawPoint(x, y, "", PlayerCanvas)
-        playerVertices.push([x, y]);
-        calculatePlayerResults();
-        return;
-
-      case 2:
-        if(playerVertices.length>0){
-          var [x, y] = getMousePosition(PlayerCanvas, e);
-          for(var i = 0; i<playerVertices.length;i++){
-            if(5>Math.hypot(playerVertices[i][0] - x, playerVertices[i][1] - y)){
-              removePoint(i);
-              calculatePlayerResults();
-              return;
-            }
-          }
-        }
-      }
-      }
-    });
-
-PlayerCanvas.addEventListener('contextmenu', event => event.preventDefault());
-
-
-//CANVAS FUNCTIONS-------------------------------------------------------------------
-function getMousePosition(canvas, event) {
-  let rect = canvas.getBoundingClientRect();
-  let x = event.clientX - rect.left;
-  let y = event.clientY - rect.top;
-  //console.log(x, y);
-  return [x, y]
-}
-
-function connectPoints(start, end, canvas) {
-  var ctx = canvas.getContext("2d");
-  ctx.beginPath();
-  ctx.moveTo(start[0], start[1]);
-  ctx.lineTo(end[0], end[1]);
-  ctx.stroke();
-}
-
-function drawPoint(x, y, colour, canvas) {
-  var ctx = canvas.getContext("2d");
-  ctx.beginPath();
-  ctx.arc(x, y, 5, 0, 2 * Math.PI);
-  ctx.fillStyle = colour;
-  ctx.fill();
-}
-
-function removePoint(index){
-  playerVertices.splice(index,1);
-}
-
-function drawPlayerPath(extrapoints, path, canvas) {
-  resetCanvas(PlayerCanvas);
-  for (let i = 0; i < extrapoints.length; i++) {
-    drawPoint(extrapoints[i][0], extrapoints[i][1], "red", canvas);
-  }
-  for (let i = 0; i < path.length; i++) {
-    connectPoints(path[i][0], path[i][1], canvas);
-  }
-}
-
-function drawAlgorithmPath(extrapoints, path, canvas) {
-  resetCanvas(canvas);
-  for (let i = 0; i < extrapoints.length; i++) {
-    drawPoint(extrapoints[i][0], extrapoints[i][1], "orange", canvas);
-  }
-  for (let i = 0; i < path.length; i++) {
-    connectPoints(path[i][0], path[i][1], canvas);
-  }
-}
-
-function resetCanvas(canvas) {
-  var ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (var i = 0; i < startingVertices.length; i++) {
-    drawPoint(startingVertices[i][0], startingVertices[i][1], "white", canvas);
-  }
-}
-function fightResults(generation) {
-  if(generation == -1){//player beat algorithm
-    document.getElementById('finalresults').innerHTML = "You Won!";
-    $("#finalresults").fadeIn("slow");
-  }else{//algorithm beat player
-    document.getElementById('finalresults').innerHTML =  "Algorithm Won <br> <p> You survived: "+ generation +" generations.<p>";
-    $("#finalresults").fadeIn("slow");
-  }
-}
 
 //GENETIC ALGORITHM---------------------------------------------------------------------
 class Genome {
@@ -162,7 +25,7 @@ class Genome {
   fitness = 0;
 }
 
-function CreateNewPopulation() {
+function CreateNewPopulation(population) {
   var startingValues = prims([]);
   for (var i = 0; i < GENOMES_POPULATION; i++) {
     let newGenome = new Genome();
@@ -170,34 +33,10 @@ function CreateNewPopulation() {
     newGenome.fitness = startingValues.fitness;
     population.push(newGenome);
   }
-  return population;
 }
 
-async function GeneticAlgorithm() {
-  CreateNewPopulation();
-  var results = true;
-  for (var generation = 0; generation <= NUMGENERATIONS; generation++) {
-    SurvivaloftheFittest();
-    MutatePopulation();
-    population.sort(function (a, b) { return a.fitness - b.fitness; });
-    document.getElementById("alg_results").innerHTML = "Current Fitness: " + Math.round(population[0].fitness * 100) / 100 + " pixels.";
-    document.getElementById("alg_results2").innerHTML = "Generation: " + generation + ".";
-    drawAlgorithmPath(population[0].chromosomes, population[0].path, AlgorithmCanvas);
-    await new Promise(r => setTimeout(r, WAITTIME)); ///??? sure
-    //console.log("popfitness = "+Math.round(population[0].fitness * 100)/100+"player results = "+playerscore);
-    if(Math.round(population[0].fitness * 100)/100 < playerscore && results){
-      results = false;
-      //console.log("printed results");
-      fightResults(generation);
-    }else if (generation == NUMGENERATIONS && results){
-      fightResults(-1);
-    }
-  }
-}
-
-function SurvivaloftheFittest() {
+function SurvivaloftheFittest(population) {
   //Kills of SURVIVAL_RATE, breeds remaining genomes
-  //console.log(population.length);
   var survivalIndex = parseInt(population.length * (SURVIVAL_RATE / 100));
   population.splice(survivalIndex, population.length - survivalIndex);
   for (var i = population.length; i < GENOMES_POPULATION; i++) {
@@ -220,7 +59,7 @@ function SurvivaloftheFittest() {
   }
 }
 
-function MutatePopulation() {
+function MutatePopulation(population) {
   for (var i = 0; i < population.length; i++) {
     var genome = population[i];
     if (genome.chromosomes.length == 0 || Math.floor(Math.random() * 101) < NEWPOINT_MUTATION) {
@@ -240,10 +79,7 @@ function MutatePopulation() {
 
 function movePointMutatation(genome) {
   let pointindex = Math.floor(Math.random() * genome.chromosomes.length);
-  //console.log("length of array = "+ genome.chromosomes.length);
-  //console.log("point index=" +pointindex)
   let angle = Math.floor(Math.random() * 361);
-  //console.log("OLD POINT = "+genome.chromosomes[pointindex]);
   let x = genome.chromosomes[pointindex][0] + MUTATIONMOVE_SIZE * Math.sin(angle * (Math.PI / 180));
   if (x >= width) { x = width; }
   else if (x <= 0) { x = 0; }
@@ -251,7 +87,6 @@ function movePointMutatation(genome) {
   if (y >= width) { y = width; }
   else if (y <= 0) { y = 0; }
   genome.chromosomes[pointindex] = [x, y];
-  //console.log("NEW POINT = "+genome.chromosomes[pointindex]+'\n');
 }
 
 function removePointMutation(genome) {
@@ -262,7 +97,6 @@ function newPointMutation(genome) {
   var [x, y] = [Math.floor(Math.random() * (width + 1)), Math.floor(Math.random() * (height + 1))];
   genome.chromosomes.push([x, y]);
 }
-
 
 //PRIMS ALGORITHM----------------------------------------------------------------------
 function prims(points) {
@@ -307,10 +141,9 @@ function prims(points) {
   }
 }
 
-
+//MAIN---------------------------------------------------------------------
 function main() {
-  initializePoints();
-  
+  initializeGamePoints();
 }
 
 

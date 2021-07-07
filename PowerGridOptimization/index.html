@@ -48,30 +48,7 @@
     }
   </style>
   <script>
-    $(document).ready(function () {
-      $("#runalg").click(function () {
-        $("#runalg").fadeOut("slow");
-        document.getElementById('reload').style.boxShadow = "0 0 50px green";
-        document.getElementById('rangeDifficultySlider').disabled = true;
-        document.getElementById('rangeDifficultySlider').style = "opacity: 0.5;";
-        document.getElementById('rangePointsSlider').disabled = true;
-        document.getElementById('rangePointsSlider').style = "opacity: 0.5;";
-      });
-    });
-
-    function rangeSlide(value,name,text) {
-              document.getElementById(name).innerHTML = text +value;
-              if(name === 'rangePoints'){
-                STARTINGPOINTS = value;
-                initializePoints();
-              }
-              else if(name === 'rangeDifficulty'){
-                GENOMES_POPULATION = value;
-              }
-            }
-    function rangeSlideVisual(value,name,text) {
-              document.getElementById(name).innerHTML = text + value;
-            }
+    
   </script>
 </head>
 
@@ -85,23 +62,22 @@
 
   <!--NAVBAR-->
   <div class="layout">
-    <input name="nav" type="radio" class="nav home-radio" id="home" checked="checked" />
-    <div class="page home-page">
+    <input name="nav" type="radio" class="nav" id="game" checked="checked" />
+    <div class="page">
       <!--Game Page-->
       <div class="page-contents">
         <div class="game-data">
           <h1>Fight the Algorithm! </h1>
           <h2>Reduce your path length by adding extra points, then click the play button to compare to the algorithm!
           </h2>
-
           <h3><br>Controls: Left click to place points, right click to remove points. Click the redo button to try again.<br></h3>
             <span class = "rangetext" id="rangeDifficulty">Level of Difficulty: 10</span>
             <Input class="range" id="rangeDifficultySlider"type="range" value="10" min="10" max="200" onChange="rangeSlide(this.value,'rangeDifficulty','Level of Difficulty: ')"
             onmousemove="rangeSlideVisual(this.value,'rangeDifficulty','Level of Difficulty: ')"></Input>
-    
               <span class = "rangetext" id="rangePoints">Number of Points: 10</span>
               <Input class="range" id="rangePointsSlider" type="range" value="10" min="5" max="30" onChange="rangeSlide(this.value,'rangePoints','Number of Points: ')"
               onmousemove="rangeSlideVisual(this.value,'rangePoints','Number of Points: ')"></Input>
+              <br><br><h2 id="startingresults"></h2>
               <div style = "background-color: #101935; height: 7px;"></div>
 
 
@@ -112,7 +88,6 @@
             <h2 id="player_results"></h2>
             <canvas width="500" height="500" id="playercanvas">
             </canvas>
-            <h2 id="startingresults"></h2>
           </div>
 
           <div class="or-spacer">
@@ -134,7 +109,7 @@
       </div>
     </div>
     
-    <label class="nav" for="home">
+    <label class="nav" for="game">
       <span>
         Fight the Algorithm
       </span>
@@ -153,7 +128,7 @@
         Edit the Algorithm
       </span>
     </label>
-
+    <!--
     <input name="nav" type="radio" class="contact-radio" id="contact" />
     <div class="page contact-page">
       <div class="page-contents">
@@ -169,6 +144,7 @@
       </span>
 
     </label>
+    -->
   </div>
 
 
@@ -236,3 +212,4 @@
 -->
 </body>
 <script src="common/js/main.js"> </script>
+<script src="common/js/game.js"> </script>
