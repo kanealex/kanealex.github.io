@@ -11,15 +11,15 @@ var playerscore;
 //INITIALIZING FUNCTIONS-------------------------------------------------------------
 function initializeGamePoints() {
   startingVertices.splice(0,startingVertices.length);
-  resetCanvas(AlgorithmCanvas);
-  resetCanvas(PlayerCanvas);
+  resetCanvas(AlgorithmCanvas,startingVertices);
+  resetCanvas(PlayerCanvas,startingVertices);
   for (var i = 0; i < STARTINGPOINTS; i++) {
     var [x, y] = [Math.floor(Math.random() * (width + 1)), Math.floor(Math.random() * (height + 1))];
     drawPoint(x, y, "white", PlayerCanvas);
     drawPoint(x, y, "white", AlgorithmCanvas);
     startingVertices.push([x, y]);
   }
-  let results = prims(startingVertices);
+  let results = prims(startingVertices,startingVertices);
   drawPlayerPath([], results.path, PlayerCanvas);
   drawAlgorithmPath([], results.path, AlgorithmCanvas);
   playerscore = results.fitness;
@@ -30,7 +30,7 @@ function initializeGamePoints() {
 
 //PLAYER FUNCTIONS-------------------------------------------------------------------
 function calculatePlayerResults() {
-  results = prims(playerVertices);
+  results = prims(playerVertices,startingVertices);
   drawPlayerPath(playerVertices, results.path, PlayerCanvas);
   document.getElementById("player_results").innerHTML = "Current Fitness: " +Math.round(results.fitness * 100) / 100 + " pixels.";
   playerscore = results.fitness;
@@ -43,7 +43,6 @@ PlayerCanvas.addEventListener("mouseup", function (e) {
       case 0:
         document.getElementById('runalg').style.boxShadow = "0 0 50px green";
         var [x, y] = getMousePosition(PlayerCanvas, e);
-        drawPoint(x, y, "", PlayerCanvas)
         playerVertices.push([x, y]);
         calculatePlayerResults();
         return;
@@ -120,7 +119,7 @@ function removePoint(index){
 }
 
 function drawPlayerPath(extrapoints, path, canvas) {
-  resetCanvas(canvas);
+  resetCanvas(canvas,startingVertices);
   for (let i = 0; i < extrapoints.length; i++) {
     drawPoint(extrapoints[i][0], extrapoints[i][1], "red", canvas);
   }
@@ -130,7 +129,7 @@ function drawPlayerPath(extrapoints, path, canvas) {
 }
 
 function drawAlgorithmPath(extrapoints, path, canvas) {
-  resetCanvas(canvas);
+  resetCanvas(canvas,startingVertices);
   for (let i = 0; i < extrapoints.length; i++) {
     drawPoint(extrapoints[i][0], extrapoints[i][1], "orange", canvas);
   }
@@ -139,11 +138,12 @@ function drawAlgorithmPath(extrapoints, path, canvas) {
   }
 }
 
-function resetCanvas(canvas) {
+
+function resetCanvas(canvas,initialpoints) {
   var ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (var i = 0; i < startingVertices.length; i++) {
-    drawPoint(startingVertices[i][0], startingVertices[i][1], "white", canvas);
+  for (var i = 0; i < initialpoints.length; i++) {
+    drawPoint(initialpoints[i][0], initialpoints[i][1], "white", canvas);
   }
 }
 

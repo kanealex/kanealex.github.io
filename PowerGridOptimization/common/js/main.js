@@ -26,7 +26,7 @@ class Genome {
 }
 
 function CreateNewPopulation(population) {
-  var startingValues = prims([]);
+  var startingValues = prims([],startingVertices);
   for (var i = 0; i < GENOMES_POPULATION; i++) {
     let newGenome = new Genome();
     newGenome.path = [...startingValues.path];
@@ -71,7 +71,7 @@ function MutatePopulation(population) {
     if (Math.floor(Math.random() * 101) < MOVEPOINT_MUTATION && genome.chromosomes.length > 0) {
       movePointMutatation(genome);
     }
-    var updatedResults = prims(genome.chromosomes);
+    var updatedResults = prims(genome.chromosomes,startingVertices);
     genome.path = [...updatedResults.path]; //maybe need a deepcopy
     genome.fitness = updatedResults.fitness;
   }
@@ -99,16 +99,16 @@ function newPointMutation(genome) {
 }
 
 //PRIMS ALGORITHM----------------------------------------------------------------------
-function prims(points) {
+function prims(newpoints,startingpoints) {
   var reached = [];
   var unreached = [];
   var path = [];
   var pathLength = 0;
-  for (var k = 0; k < startingVertices.length; k++) {
-    unreached.push(startingVertices[k]);
+  for (var k = 0; k < startingpoints.length; k++) {
+    unreached.push(startingpoints[k]);
   }
-  for (var k = 0; k < points.length; k++) {
-    unreached.push(points[k]);
+  for (var k = 0; k < newpoints.length; k++) {
+    unreached.push(newpoints[k]);
   }
   reached.push(unreached[0]);
   unreached.splice(0, 1);
@@ -140,10 +140,46 @@ function prims(points) {
     path: path,
   }
 }
+//CANVAS METHODS------------------------------------------------------------
+
+function resetCanvas(canvas,initialpoints) {
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (var i = 0; i < initialpoints.length; i++) {
+    drawPoint(initialpoints[i][0], initialpoints[i][1], "white", canvas);
+  }
+}
+
+function getMousePosition(canvas, event) {
+  let rect = canvas.getBoundingClientRect();
+  let x = event.clientX - rect.left;
+  let y = event.clientY - rect.top;
+  return [x, y]
+}
+
+function connectPoints(start, end, canvas) {
+  var ctx = canvas.getContext("2d");
+  ctx.beginPath();
+  ctx.moveTo(start[0], start[1]);
+  ctx.lineTo(end[0], end[1]);
+  ctx.stroke();
+}
+
+function drawPoint(x, y, colour, canvas) {
+  var ctx = canvas.getContext("2d");
+  ctx.beginPath();
+  ctx.arc(x, y, 5, 0, 2 * Math.PI);
+  ctx.fillStyle = colour;
+  ctx.fill();
+}
+
+
+
 
 //MAIN---------------------------------------------------------------------
 function main() {
   initializeGamePoints();
+  initializeExamplePoints()
 }
 
 

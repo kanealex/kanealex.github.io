@@ -33,7 +33,7 @@
       border-radius: 15px;
       overflow: hidden;
       box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
-      
+
     }
 
     .range::-webkit-slider-thumb {
@@ -48,7 +48,7 @@
     }
   </style>
   <script>
-    
+
   </script>
 </head>
 
@@ -70,15 +70,19 @@
           <h1>Fight the Algorithm! </h1>
           <h2>Reduce your path length by adding extra points, then click the play button to compare to the algorithm!
           </h2>
-          <h3><br>Controls: Left click to place points, right click to remove points. Click the redo button to try again.<br></h3>
-            <span class = "rangetext" id="rangeDifficulty">Level of Difficulty: 10</span>
-            <Input class="range" id="rangeDifficultySlider"type="range" value="10" min="10" max="200" onChange="rangeSlide(this.value,'rangeDifficulty','Level of Difficulty: ')"
+          <h3><br>Controls: Left click to place points, right click to remove points. Click the redo button to try
+            again.<br></h3>
+          <span class="rangetext" id="rangeDifficulty">Level of Difficulty: 10</span>
+          <Input class="range" id="rangeDifficultySlider" type="range" value="10" min="10" max="200"
+            onChange="rangeSlide(this.value,'rangeDifficulty','Level of Difficulty: ')"
             onmousemove="rangeSlideVisual(this.value,'rangeDifficulty','Level of Difficulty: ')"></Input>
-              <span class = "rangetext" id="rangePoints">Number of Points: 10</span>
-              <Input class="range" id="rangePointsSlider" type="range" value="10" min="5" max="30" onChange="rangeSlide(this.value,'rangePoints','Number of Points: ')"
-              onmousemove="rangeSlideVisual(this.value,'rangePoints','Number of Points: ')"></Input>
-              <br><br><h2 id="startingresults"></h2>
-              <div style = "background-color: #101935; height: 7px;"></div>
+          <span class="rangetext" id="rangePoints">Number of Points: 10</span>
+          <Input class="range" id="rangePointsSlider" type="range" value="10" min="5" max="30"
+            onChange="rangeSlide(this.value,'rangePoints','Number of Points: ')"
+            onmousemove="rangeSlideVisual(this.value,'rangePoints','Number of Points: ')"></Input>
+          <br><br>
+          <h2 id="startingresults"></h2>
+          <div style="background-color: #101935; height: 7px;"></div>
 
 
         </div>
@@ -93,7 +97,7 @@
           <div class="or-spacer">
             <button class="btn" id="runalg" onclick="GeneticAlgorithm();">Submit and Fight</button>
             <div style="display:none;" id="finalresults">ok</div>
-            <span style="margin-top: 15vw;" id ='reload' onclick="location.reload();"><i class="fas fa-redo"
+            <span style="margin-top: 15vw;" id='reload' onclick="location.reload();"><i class="fas fa-redo"
                 style="font-size:24px; color: white"></i></span>
           </div>
 
@@ -105,10 +109,10 @@
             <h2 id="alg_results2">Generation: 0.</h2>
           </div>
         </div>
-        <div style = "background-color: #101935; height: 70px;"></div>
+        <div style="background-color: #101935; height: 70px;"></div>
       </div>
     </div>
-    
+
     <label class="nav" for="game">
       <span>
         Fight the Algorithm
@@ -118,11 +122,16 @@
     <div class="page about-page">
       <!--About Page-->
       <div class="page-contents">
-        <h1>About</h1>
-        <p>Amet consectetur adipisicing elit. Sed ipsam ad exercitationem, quo quae ullam, quidem laudantium corporis
-          quis minima debitis nesciunt repellat. Quos dolore ex quis voluptas, minus ut?</p>
+        <div class="learn-data">
+        <h1>How it Works.</h1>
+        <!--<h2>Goal: Reduce total path length. <br> Strategy: Add extra points and find the shortest path between them. </h2>-->
+        <h2>Add an extra point to reduce path length!</h2>
+        <canvas width="400" height="400" id="examplecanvas" style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
+          <p id="examplefitness"></p>
+          <p id="examplecurrentfitness"></p>
       </div>
     </div>
+  </div>
     <label class="nav" for="about">
       <span>
         Edit the Algorithm
@@ -213,3 +222,4 @@
 </body>
 <script src="common/js/main.js"> </script>
 <script src="common/js/game.js"> </script>
+<script src="common/js/teaching.js"> </script>
