@@ -46,6 +46,41 @@
       border: 4px solid #333;
       box-shadow: -407px 0 0 400px #00fd0a;
     }
+    #step3results th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+  }
+
+  #step3results {
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#step3results td, #step3results th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#step3results tr:nth-child(even){background-color: #f2f2f2;}
+
+  table {
+	display: table;
+  }
+  table tr {
+	display: table-cell;
+  }
+  table tr td {
+  height: 40px;
+	display: block;
+  }
+  table th {
+  height: 40px;
+	display: block;
+  }
   </style>
   <script>
 
@@ -64,7 +99,63 @@
   <div class="layout">
     <input name="nav" type="radio" class="nav" id="game" checked="checked" />
     <div class="page">
+      <div class="page-contents">
+        <div class="learn-data">
+        <!--<h2>Goal: Reduce total path length. <br> Strategy: Add extra points and find the shortest path between them. </h2>-->
+        <h2>Step 1: Basic Concept</h2>
+        <h3>Adding extra points can reduce the total path length.</h3><br>
+        <p>Click the canvas to add an extra point, reduce the total path length to continue!</p>
+        <canvas width="400" height="400" id="step1canvas" style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
+        <br><br>
+          <p id="step1fitness"></p>
+          <p id="step1currentfitness"></p>
+          <div style="background-color: #101935; height: 40px;"></div>
+          <div id="step2" style= "display: none;">
+            <h2>Step 2: Random Genetic Algoritm</h2>
+            <h3>A genetic algorithm is perfectly suited for finding these extra points.</h3>
+            <p>Its most basic form is simply a group of individuals (<b>Genomes</b>) that all contain randomly added points (<b>Chromosomes</b>).</p>
+            <p>Due to random chance, some of these individuals will have points that reduce the path length.</p>
+            <p>Click the canvas to see 10 genomes with random points and their corrosponding path lengths.</p>
+            <div class="container">
+            <canvas width="400" height="400" id="step2canvas" style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0); right: 50%;"></canvas>
+            <span style = "position: fixed; margin-left: 20px;" id ="step2currentfitness"></span>
+          </div>
+            <p id="step2fitness"></p>
+          </div>
+          <div style="background-color: #101935; height: 40px;"></div>
+          <div id="step3" style= "display: none;">
+            <h2>Step 3: Generational Genetic Algoritm</h2>
+            <h3>To increase the chance of consistently finding better genomes, lets add some generations.</h3>
+            <p>This requires some <b>Natural Selection</b> to take place, where badly performing genomes are replaced with new genomes each generation.</p>
+            <p>Click the canvas to run the algorithm for 10 generations with 10 genomes in each generation.</p>
+            <canvas width="400" height="400" id="step3canvas" style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0); right: 50%;"></canvas>
+            <p id="step3fitness"></p>
+            <table id="step3results"></table>
+
+          </div>
+          <div style="background-color: #101935; height: 40px;"></div>
+          <div id="step4" style= "display: none;">
+            <h2>Step 3: Localizing Genetic Algoritm</h2>
+            <h3>To increase the chance of consistently finding better genomes, lets add some generations.</h3>
+            <p>This requires some <b>Natural Selection</b> to take place, where badly performing genomes are replaced with new genomes each generation.</p>
+            
+            
+          </div>
+      </div>
+      <br><br><br><br><br><br><br>
+    </div>
       <!--Game Page-->
+      
+    </div>
+
+    <label class="nav" for="game">
+      <span>
+        Learn the Theory
+      </span>
+    </label>
+    <input name="nav" type="radio" class="about-radio" id="about" />
+    <div class="page">
+      <!--About Page-->
       <div class="page-contents">
         <div class="game-data">
           <h1>Fight the Algorithm! </h1>
@@ -83,8 +174,6 @@
           <br><br>
           <h2 id="startingresults"></h2>
           <div style="background-color: #101935; height: 7px;"></div>
-
-
         </div>
         <div class="grid-container canvas-container">
           <div>
@@ -111,32 +200,14 @@
         </div>
         <div style="background-color: #101935; height: 70px;"></div>
       </div>
-    </div>
-
-    <label class="nav" for="game">
+      
+  </div>
+    <label class="nav" for="about">
       <span>
         Fight the Algorithm
       </span>
     </label>
-    <input name="nav" type="radio" class="about-radio" id="about" />
-    <div class="page about-page">
-      <!--About Page-->
-      <div class="page-contents">
-        <div class="learn-data">
-        <h1>How it Works.</h1>
-        <!--<h2>Goal: Reduce total path length. <br> Strategy: Add extra points and find the shortest path between them. </h2>-->
-        <h2>Add an extra point to reduce path length!</h2>
-        <canvas width="400" height="400" id="examplecanvas" style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
-          <p id="examplefitness"></p>
-          <p id="examplecurrentfitness"></p>
-      </div>
-    </div>
-  </div>
-    <label class="nav" for="about">
-      <span>
-        Edit the Algorithm
-      </span>
-    </label>
+
     <!--
     <input name="nav" type="radio" class="contact-radio" id="contact" />
     <div class="page contact-page">
@@ -155,6 +226,7 @@
     </label>
     -->
   </div>
+
 
 
 

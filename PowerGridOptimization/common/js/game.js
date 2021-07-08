@@ -91,28 +91,6 @@ $(document).ready(function () {
           }
 
 //CANVAS FUNCTIONS-------------------------------------------------------------------
-function getMousePosition(canvas, event) {
-  let rect = canvas.getBoundingClientRect();
-  let x = event.clientX - rect.left;
-  let y = event.clientY - rect.top;
-  return [x, y]
-}
-
-function connectPoints(start, end, canvas) {
-  var ctx = canvas.getContext("2d");
-  ctx.beginPath();
-  ctx.moveTo(start[0], start[1]);
-  ctx.lineTo(end[0], end[1]);
-  ctx.stroke();
-}
-
-function drawPoint(x, y, colour, canvas) {
-  var ctx = canvas.getContext("2d");
-  ctx.beginPath();
-  ctx.arc(x, y, 5, 0, 2 * Math.PI);
-  ctx.fillStyle = colour;
-  ctx.fill();
-}
 
 function removePoint(index){
   playerVertices.splice(index,1);
@@ -138,14 +116,6 @@ function drawAlgorithmPath(extrapoints, path, canvas) {
   }
 }
 
-
-function resetCanvas(canvas,initialpoints) {
-  var ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (var i = 0; i < initialpoints.length; i++) {
-    drawPoint(initialpoints[i][0], initialpoints[i][1], "white", canvas);
-  }
-}
 
 function fightResults(generation) {
   if(generation == -1){//player beat algorithm

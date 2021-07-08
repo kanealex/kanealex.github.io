@@ -26,6 +26,7 @@ class Genome {
 }
 
 function CreateNewPopulation(population) {
+  population.splice(0,population.length);
   var startingValues = prims([],startingVertices);
   for (var i = 0; i < GENOMES_POPULATION; i++) {
     let newGenome = new Genome();
@@ -173,13 +174,13 @@ function drawPoint(x, y, colour, canvas) {
   ctx.fill();
 }
 
-
-
-
 //MAIN---------------------------------------------------------------------
 function main() {
   initializeGamePoints();
-  initializeExamplePoints()
+  initializeStep1Points();
+  initializeStep2Points();
+  createResultsTable();
+  initializeStep3Points();
 }
 
 
