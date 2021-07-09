@@ -130,24 +130,24 @@ function initializeStep3Points() {
     drawStep3Path([], results.path, step3Canvas);
     step3StartingLength = Math.round(results.fitness * 100) / 100;
     document.getElementById("step3fitness").innerHTML = "Starting Fitness: " + step3StartingLength + " pixels.";
-    step3population.splice(0,step3population.length);
+    step3population.splice(0, step3population.length);
     for (var i = 0; i < STEP3POPULATIONS; i++) {
         createStep3Genome();
     }
 }
 
-function createStep3Genome(){
+function createStep3Genome() {
     let newGenome = new Genome();
     var [x, y] = [Math.floor(Math.random() * (400 + 1)), Math.floor(Math.random() * (400 + 1))];
-    newGenome.chromosomes = [[x,y]];
-    let results = prims([[x,y]], step3Vertices);
+    newGenome.chromosomes = [[x, y]];
+    let results = prims([[x, y]], step3Vertices);
     newGenome.path = [...results.path];
     newGenome.fitness = results.fitness;
     step3population.push(newGenome);
 }
 
 function drawStep3Path(extrapoint, path, canvas) {
-    resetCanvas(canvas, step2Vertices);
+    resetCanvas(canvas, step3Vertices);
     for (let i = 0; i < extrapoint.length; i++) {
         drawPoint(extrapoint[i][0], extrapoint[i][1], "purple", canvas);
     }
@@ -156,25 +156,25 @@ function drawStep3Path(extrapoint, path, canvas) {
     }
 }
 
-async function step3GeneticAlgorithm(){
+async function step3GeneticAlgorithm() {
     if (lockedstep3 == true) {
         lockedstep3 = false;
         initializeStep3Points();
         var table = document.getElementById("step3results");
         for (var i = 0; i < STEP3GENERATIONS; i++) {
- 
-            step3population.splice(step3population.length-step3GenomesKilled,step3GenomesKilled);
-            for(var j = step3population.length;j<STEP3POPULATIONS;j++){
+
+            step3population.splice(step3population.length - step3GenomesKilled, step3GenomesKilled);
+            for (var j = step3population.length; j < STEP3POPULATIONS; j++) {
                 createStep3Genome();
             }
             step3population.sort(function (a, b) { return a.fitness - b.fitness; });
-            var row = table.getElementsByTagName("tr")[i+1];
+            var row = table.getElementsByTagName("tr")[i + 1];
             drawStep3Path(step3population[0].chromosomes, step3population[0].path, step3Canvas);
-            for(var k=0;k<STEP3POPULATIONS;k++){
+            for (var k = 0; k < STEP3POPULATIONS; k++) {
                 if (step3population[k].fitness > step3StartingLength) {
                     var style = "color:#a81616;";
                 } else { style = "color: #22c740;" }
-                row.getElementsByTagName("td")[k].innerHTML = "<td>"+"<span style='" + style + "'>" + Math.round(step3population[k].fitness * 100) / 100 + "</span>"+"</td>";
+                row.getElementsByTagName("td")[k].innerHTML = "<td>" + "<span style='" + style + "'>" + Math.round(step3population[k].fitness * 100) / 100 + "</span>" + "</td>";
                 await new Promise(r => setTimeout(r, 30));
             }
         }
@@ -185,28 +185,15 @@ async function step3GeneticAlgorithm(){
 }
 
 
-
-step3Canvas.addEventListener("mouseup", function (e) {
-    if (typeof e === 'object') {
-        switch (e.button) {
-            case 0:
-                step3GeneticAlgorithm();
-                return;
-        }
-    }
-});
-
-
 function createResultsTable() {
     var table = document.getElementById("step3results");
-    
     var tr = document.createElement('tr');
     var td = document.createElement('td');
     tr.appendChild(td);
     for (var i = 0; i < STEP3POPULATIONS; i++) {
-    td = document.createElement('td');
-    td.appendChild(document.createTextNode('Genome: '+(i+1)));
-    tr.appendChild(td);
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode('Genome: ' + (i + 1)));
+        tr.appendChild(td);
     }
 
     table.appendChild(tr);
@@ -214,13 +201,219 @@ function createResultsTable() {
     for (var i = 0; i < STEP3POPULATIONS; i++) {
         var th = document.createElement('th');
         var tr = document.createElement('tr');
-        th.appendChild(document.createTextNode('Generation: '+ (i+1)));
+        th.appendChild(document.createTextNode('Generation: ' + (i + 1)));
         tr.appendChild(th);
         for (var j = 0; j < STEP3GENERATIONS; j++) {
             var td = document.createElement('td');
             //td.appendChild(document.createTextNode(''));
             tr.appendChild(td);
-        table.appendChild(tr);
-    }
+            table.appendChild(tr);
+        }
     }
 }
+
+step3Canvas.addEventListener("mouseup", function (e) {
+    if (typeof e === 'object') {
+        switch (e.button) {
+            case 0:
+                step3GeneticAlgorithm()
+                return;
+        }
+    }
+});
+
+//STEP 4---------------------------------------------------------------------------
+var noMutation = [];
+var withMutation = [];
+var xValues = [];
+var CanvasMutation = document.getElementById("canvasmutation");
+var CanvasNoMutation = document.getElementById("canvasnomutation");
+var step4Vertices = [[200, 50], [50, 350], [350, 350]];
+var step4StartingLength;
+var STEP4GENERATIONS = 50;
+var STEP4POPULATION = 15;
+var step4Mutation = [];
+var step4NoMutation = [];
+var step4GenomesKilled = 2;
+var lockedstep4nomutation = true;
+var lockedstep4mutation = true;
+var STEP4_MOVE_SIZE = 2;
+
+function initializeStep4Points() {
+
+    for (let i = 0; i < STEP4GENERATIONS; i++) {
+        xValues.push(i);
+    }
+    myChart.update();
+    let results = prims([], step4Vertices);
+    drawStep4Path([], results.path, CanvasMutation);
+    drawStep4Path([], results.path, CanvasNoMutation);
+    step4StartingLength = Math.round(results.fitness * 100) / 100;
+    //document.getElementById("step3fitness").innerHTML = "Starting Fitness: " + step3StartingLength + " pixels.";
+    resetStep4Population(step4Mutation);
+    resetStep4Population(step4NoMutation);
+}
+
+function resetStep4Population(population) {
+    population.splice(0, population.length);
+    for (var i = 0; i < STEP4POPULATION; i++) {
+        createStep4Genome(population);
+    }
+}
+
+function drawStep4Path(extrapoint, path, canvas) {
+    resetCanvas(canvas, step4Vertices);
+    for (let i = 0; i < extrapoint.length; i++) {
+        drawPoint(extrapoint[i][0], extrapoint[i][1], "purple", canvas);
+    }
+    for (let i = 0; i < path.length; i++) {
+        connectPoints(path[i][0], path[i][1], canvas);
+    }
+}
+
+function createStep4Genome(population) {
+    let newGenome = new Genome();
+    var [x, y] = [Math.floor(Math.random() * (400 + 1)), Math.floor(Math.random() * (400 + 1))];
+    newGenome.chromosomes = [[x, y]];
+    let results = prims([[x, y]], step4Vertices);
+    newGenome.path = [...results.path];
+    newGenome.fitness = results.fitness;
+    population.push(newGenome);
+}
+
+function mutateStep4Genome(population, parent) {
+    console.log(parent);
+    let newGenome = new Genome();
+    let angle = Math.floor(Math.random() * 361);
+    let x = parent.chromosomes[0][0] + STEP4_MOVE_SIZE * Math.sin(angle * (Math.PI / 180));
+    if (x >= 400) { x = 400; }
+    else if (x <= 0) { x = 0; }
+    let y = parent.chromosomes[0][1] + STEP4_MOVE_SIZE * Math.cos(angle * (Math.PI / 180));
+    if (y >= 400) { y = 400; }
+    else if (y <= 0) { y = 0; }
+    newGenome.chromosomes.push([x, y]);
+    let results = prims([[x, y]], step4Vertices);
+    newGenome.path = [...results.path];
+    newGenome.fitness = results.fitness;
+    population.push(newGenome);
+}
+
+
+async function step4NoMutationGenetic() {
+    if (lockedstep4nomutation == true) {
+        lockedstep4nomutation = false;
+        noMutation.splice(0, noMutation.length);
+        step4NoMutation.splice(0, step4NoMutation.length);
+        resetStep4Population(step4NoMutation);
+        resetCanvas(CanvasNoMutation, step4Vertices);
+        for (var i = 0; i < STEP4GENERATIONS; i++) {
+            step4NoMutation.splice(step4NoMutation.length - step4GenomesKilled, step4GenomesKilled);
+            for (var j = step4NoMutation.length; j < STEP4POPULATION; j++) {
+                createStep4Genome(step4NoMutation);
+            }
+            step4NoMutation.sort(function (a, b) { return a.fitness - b.fitness; });
+            drawStep4Path(step4NoMutation[0].chromosomes, step4NoMutation[0].path, CanvasNoMutation);
+            noMutation.push(step4NoMutation[0].fitness);
+            myChart.update();
+            console.log(step4NoMutation[0].fitness);
+            await new Promise(r => setTimeout(r, 30));
+        }
+        lockedstep4nomutation = true;
+    }
+}
+
+async function step4MutationGenetic() {
+    if (lockedstep4mutation == true) {
+        lockedstep4mutation = false;
+        step4Mutation.splice(0, step4Mutation.length);
+        withMutation.splice(0, withMutation.length);
+        resetStep4Population(step4Mutation);
+        resetCanvas(CanvasMutation, step4Vertices);
+        for (var i = 0; i < STEP4GENERATIONS; i++) {
+            step4Mutation.splice(step4Mutation.length - step4GenomesKilled, step4GenomesKilled);
+            for (var j = step4Mutation.length; j < STEP4POPULATION; j++) {
+                mutateStep4Genome(step4Mutation, step4Mutation[0]);
+            }
+            step4Mutation.sort(function (a, b) { return a.fitness - b.fitness; });
+            drawStep4Path(step4Mutation[0].chromosomes, step4Mutation[0].path, CanvasMutation);
+            withMutation.push(step4Mutation[0].fitness);
+            myChart.update();
+            console.log(step4Mutation[0].fitness);
+            await new Promise(r => setTimeout(r, 30));
+        }
+        lockedstep4mutation = true;
+    }
+}
+
+CanvasNoMutation.addEventListener("mouseup", function (e) {
+    if (typeof e === 'object') {
+        switch (e.button) {
+            case 0:
+                step4NoMutationGenetic();
+                return;
+        }
+    }
+});
+
+CanvasMutation.addEventListener("mouseup", function (e) {
+    if (typeof e === 'object') {
+        switch (e.button) {
+            case 0:
+                step4MutationGenetic();
+                return;
+        }
+    }
+});
+
+
+
+
+
+
+var myChart = new Chart("myChart", {
+    type: "line",
+    data: {
+        labels: xValues,
+        datasets: [{
+            label: 'With Mutations',
+            fill: false,
+            lineTension: 0,
+            borderColor: "rgba(0,0,255,1)",
+            data: noMutation,
+
+        }, {
+            label: 'Without Mutations',
+            fill: false,
+            lineTension: 0,
+            borderColor: "rgba(255,0,255,1)",
+            data: withMutation
+        }
+        ]
+
+    },
+    options: {
+        responsive: true,
+        legend: {},
+        elements: {
+            point: {
+                radius: 0
+            }
+        },
+        scales: {
+            yAxes: [{
+                ticks: { min: 550, max: 600 },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Leading Fitness'
+                }
+            }],
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Generation'
+                }
+            }]
+        }
+
+    }
+});

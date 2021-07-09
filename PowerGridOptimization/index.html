@@ -46,41 +46,54 @@
       border: 4px solid #333;
       box-shadow: -407px 0 0 400px #00fd0a;
     }
+
     #step3results th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #04AA6D;
-  color: white;
-  }
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #04AA6D;
+      color: white;
+    }
 
-  #step3results {
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-}
+    #step3results {
+      border-collapse: collapse;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-#step3results td, #step3results th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
+    #step3results td,
+    #step3results th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
 
-#step3results tr:nth-child(even){background-color: #f2f2f2;}
+    #step3results tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
 
-  table {
-	display: table;
-  }
-  table tr {
-	display: table-cell;
-  }
-  table tr td {
-  height: 40px;
-	display: block;
-  }
-  table th {
-  height: 40px;
-	display: block;
-  }
+    table {
+      display: table;
+    }
+
+    table tr {
+      display: table-cell;
+    }
+
+    table tr td {
+      height: 40px;
+      display: block;
+    }
+
+    table th {
+      height: 40px;
+      display: block;
+    }
+
+
+
+
+
+
   </style>
   <script>
 
@@ -101,51 +114,75 @@
     <div class="page">
       <div class="page-contents">
         <div class="learn-data">
-        <!--<h2>Goal: Reduce total path length. <br> Strategy: Add extra points and find the shortest path between them. </h2>-->
-        <h2>Step 1: Basic Concept</h2>
-        <h3>Adding extra points can reduce the total path length.</h3><br>
-        <p>Click the canvas to add an extra point, reduce the total path length to continue!</p>
-        <canvas width="400" height="400" id="step1canvas" style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
-        <br><br>
+          <!--<h2>Goal: Reduce total path length. <br> Strategy: Add extra points and find the shortest path between them. </h2>-->
+          <h2>Step 1: Basic Concept</h2>
+          <h3>Adding extra points can reduce the total path length.</h3><br>
+          <p>Click the canvas to add an extra point, reduce the total path length to continue!</p>
+          <canvas width="400" height="400" id="step1canvas"
+            style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
+          <br><br>
           <p id="step1fitness"></p>
           <p id="step1currentfitness"></p>
           <div style="background-color: #101935; height: 40px;"></div>
-          <div id="step2" style= "display: none;">
+          <div id="step2" style="display: none;">
             <h2>Step 2: Random Genetic Algoritm</h2>
             <h3>A genetic algorithm is perfectly suited for finding these extra points.</h3>
-            <p>Its most basic form is simply a group of individuals (<b>Genomes</b>) that all contain randomly added points (<b>Chromosomes</b>).</p>
+            <p>Its most basic form is simply a group of individuals (<b>Genomes</b>) that all contain randomly added
+              points (<b>Chromosomes</b>).</p>
             <p>Due to random chance, some of these individuals will have points that reduce the path length.</p>
             <p>Click the canvas to see 10 genomes with random points and their corrosponding path lengths.</p>
             <div class="container">
-            <canvas width="400" height="400" id="step2canvas" style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0); right: 50%;"></canvas>
-            <span style = "position: fixed; margin-left: 20px;" id ="step2currentfitness"></span>
-          </div>
+              <canvas width="400" height="400" id="step2canvas"
+                style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0); right: 50%;"></canvas>
+              <span style="position: fixed; margin-left: 20px;" id="step2currentfitness"></span>
+            </div>
             <p id="step2fitness"></p>
           </div>
           <div style="background-color: #101935; height: 40px;"></div>
-          <div id="step3" style= "display: none;">
+          <div id="step3" style="display: none;">
             <h2>Step 3: Generational Genetic Algoritm</h2>
             <h3>To increase the chance of consistently finding better genomes, lets add some generations.</h3>
-            <p>This requires some <b>Natural Selection</b> to take place, where badly performing genomes are replaced with new genomes each generation.</p>
+            <p>This requires some <b>Natural Selection</b> to take place, where badly performing genomes are replaced
+              with new genomes each generation.</p>
             <p>Click the canvas to run the algorithm for 10 generations with 10 genomes in each generation.</p>
-            <canvas width="400" height="400" id="step3canvas" style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0); right: 50%;"></canvas>
+            <canvas width="400" height="400" id="step3canvas"
+              style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0); right: 50%;"></canvas>
             <p id="step3fitness"></p>
             <table id="step3results"></table>
 
           </div>
           <div style="background-color: #101935; height: 40px;"></div>
-          <div id="step4" style= "display: none;">
-            <h2>Step 3: Localizing Genetic Algoritm</h2>
-            <h3>To increase the chance of consistently finding better genomes, lets add some generations.</h3>
-            <p>This requires some <b>Natural Selection</b> to take place, where badly performing genomes are replaced with new genomes each generation.</p>
+          <div id="step4" style="display: none;">
+            <h2>Step 4: Generational Mutations</h2>
+            <h3>Now our population has consistently positive results, but the leading genome's fitness rarely improves
+              generation by generation.</h3>
+            <p>The only way the leading path length can be improved is if a badly performing genome is replaced
+              by a random genome that happens to have a better fitness.</p>
+            <p>To consistently improve the leading genome, <b>Mutations</b> need to happen each generation.</p>
+            <p>Instead of replacing the badly performing genomes with completely new genomes, they instead will be
+              replaced with mutated versions of the leading genomes.</p>
+            <p>A mutation is a small random movement of the <b>Parents</b> chromosome. Click the graph to see how this
+              effects the leading genome fitness over time.</p>
+            <canvas id="myChart" style="margin: 0 auto; width:100%;max-width:600px; background-color:white;right: 50%; box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
+        
+            <span>
+              <canvas width="400" height="400" id="canvasmutation"
+              style="margin: 30px; right: 50%;"></canvas>
+              <canvas width="400" height="400" id="canvasnomutation"
+              style="margin: 30px; right: 50%;"></canvas>
+            </span>
+         
             
-            
+         
+
+
+
           </div>
+        </div>
+        <br><br><br><br><br><br><br>
       </div>
-      <br><br><br><br><br><br><br>
-    </div>
       <!--Game Page-->
-      
+
     </div>
 
     <label class="nav" for="game">
@@ -200,8 +237,8 @@
         </div>
         <div style="background-color: #101935; height: 70px;"></div>
       </div>
-      
-  </div>
+
+    </div>
     <label class="nav" for="about">
       <span>
         Fight the Algorithm
@@ -292,6 +329,7 @@
 </div>
 -->
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="common/js/main.js"> </script>
 <script src="common/js/game.js"> </script>
 <script src="common/js/teaching.js"> </script>
