@@ -128,7 +128,7 @@
             <div class="container">
               <canvas width="400" height="400" id="step2canvas"
                 style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0); right: 50%;"></canvas>
-              <span style="position: fixed; margin-left: 20px;" id="step2currentfitness"></span>
+              <span style="position: fixed; margin-left: 20px;" id="step2results"></span>
             </div>
             <p id="step2fitness"></p>
           </div>
@@ -182,7 +182,7 @@
             <p>Genetic Algorithms typically employ a mixture of both to get the best of both worlds.</p>
           </div>
           <div style="background-color: #101935; height: 40px;"></div>
-          <div id="step5" style="">
+          <div id="step5" style="display:none">
             <h2>Step 5: Genetic Breeding</h2>
             <h3>The final attribute of our Genetic Algorothm is the ability to combine the best results from each
               generation.</h3>
@@ -198,8 +198,7 @@
               <div></div>
               <div>
                 <h3>Parent One</h3>
-                <canvas width="300" height="300" id="step5canvasleft"
-                  style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
+                <canvas width="300" height="300" id="step5canvasleft"></canvas>
                 <h4 id='leftresults'><br>Path Improvement = -</h4>
               </div>
               <div>
@@ -209,18 +208,23 @@
               </div>
               <div>
                 <h3>Parent Two</h3>
-                <canvas width="300" height="300" id="step5canvasright"
-                  style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
+                <canvas width="300" height="300" id="step5canvasright"></canvas>
                   <h4 id='rightresults'><br>Path Improvement = -</h4>
               </div>
               <div></div>
             </div>
+            <br><button onclick = "initializeStep5Points()">Click to Reset!</button>
           </div>
+          <div style="background-color: #101935; height: 40px;"></div>
+          <div id="step6" style="display:none">
+            <h2>The Final Algorithm</h2>
+            <h3>Coming Soon....</h3>
         </div>
-        <br><br><br><br><br><br><br>
       </div>
+        <br><br><br><br><br><br><br>
+      
       <!--Game Page-->
-
+      </div>
     </div>
 
     <label class="nav" for="game">
