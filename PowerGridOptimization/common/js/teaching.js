@@ -261,7 +261,7 @@ function resetStep4Population(population) {
     }
 }
 
-function drawStep4Path(extrapoint, path, canvas,colour) {
+function drawStep4Path(extrapoint, path, canvas, colour) {
     resetCanvas(canvas, step4Vertices);
     for (let i = 0; i < extrapoint.length; i++) {
         drawPoint(extrapoint[i][0], extrapoint[i][1], colour, canvas);
@@ -312,7 +312,7 @@ async function step4NoMutationGenetic() {
                 createStep4Genome(step4NoMutation);
             }
             step4NoMutation.sort(function (a, b) { return a.fitness - b.fitness; });
-            drawStep4Path(step4NoMutation[0].chromosomes, step4NoMutation[0].path, CanvasNoMutation,"rgba(0,0,255,1)");
+            drawStep4Path(step4NoMutation[0].chromosomes, step4NoMutation[0].path, CanvasNoMutation, "rgba(0,0,255,1)");
             noMutation.push(step4NoMutation[0].fitness);
             myChart.update();
             //console.log(step4NoMutation[0].fitness);
@@ -335,7 +335,7 @@ async function step4MutationGenetic() {
                 mutateStep4Genome(step4Mutation, step4Mutation[0]);
             }
             step4Mutation.sort(function (a, b) { return a.fitness - b.fitness; });
-            drawStep4Path(step4Mutation[0].chromosomes, step4Mutation[0].path, CanvasMutation,"rgba(255,0,255,1)");
+            drawStep4Path(step4Mutation[0].chromosomes, step4Mutation[0].path, CanvasMutation, "rgba(255,0,255,1)");
             withMutation.push(step4Mutation[0].fitness);
             myChart.update();
             //console.log(step4Mutation[0].fitness);
@@ -350,7 +350,7 @@ CanvasNoMutation.addEventListener("mouseup", function (e) {
         switch (e.button) {
             case 0:
                 step4NoMutationGenetic();
-                if(document.getElementById("canvasmutation").style.boxShadow == "rgb(0, 251, 0) 0px 0px 20px 5px"){
+                if (document.getElementById("canvasmutation").style.boxShadow == "rgb(0, 251, 0) 0px 0px 20px 5px") {
                     $("#step5").fadeIn("slow");
                 }
                 document.getElementById("canvasnomutation").style = "box-shadow: 0px 0px 20px 5px rgb(0, 251, 0);";
@@ -364,7 +364,7 @@ CanvasMutation.addEventListener("mouseup", function (e) {
         switch (e.button) {
             case 0:
                 step4MutationGenetic();
-                if(document.getElementById("canvasnomutation").style.boxShadow == "rgb(0, 251, 0) 0px 0px 20px 5px"){
+                if (document.getElementById("canvasnomutation").style.boxShadow == "rgb(0, 251, 0) 0px 0px 20px 5px") {
                     $("#step5").fadeIn("slow");
                 }
                 document.getElementById("canvasmutation").style = "box-shadow: 0px 0px 20px 5px rgb(0, 251, 0);";
@@ -422,3 +422,149 @@ var myChart = new Chart("myChart", {
 
     }
 });
+
+
+
+//STEP 5---------------------------------------------------------------------------
+//GLOBALS
+var step5Points = [];
+var STEP5NUMBERPOINTS = 20;
+var STEP5POPULATION = 10000;
+var step5StartingLength;
+
+//LEFT CANVAS
+var leftCanvas = document.getElementById("step5canvasleft");
+var bestLeftGenome;
+
+leftCanvas.addEventListener("mouseup", function (e) {
+    if (typeof e === 'object') {
+        switch (e.button) {
+            case 0:
+                if (leftCanvas.style.boxShadow != "rgb(0, 251, 0) 0px 0px 20px 5px") {
+                    if (rightCanvas.style.boxShadow == "rgb(0, 251, 0) 0px 0px 20px 5px") {
+                        middleCanvas.style = "box-shadow: 0px 0px 20px 5px rgb(255, 251, 0)";
+                        leftCanvas.style = "box-shadow: 0px 0px 20px 5px rgb(0, 251, 0);";
+                    } else {
+                        leftCanvas.style = "box-shadow: 0px 0px 20px 5px rgb(0, 251, 0);";
+                    }
+                    step5LeftCanvasGenetic();
+                }
+                return;
+        }
+    }
+});
+
+async function step5LeftCanvasGenetic() {
+    bestLeftGenome = new Genome();
+    let start = prims([], step5Points);
+    bestLeftGenome.path = [...start.path];
+    bestLeftGenome.fitness = start.fitness;
+    for (var i = 0; i < STEP5POPULATION; i++) {
+        var [x, y] = [Math.floor(Math.random() * (150 + 1)), Math.floor(Math.random() * (300 + 1))]; //left side
+        var results = prims([[x, y]], step5Points);
+        if (i % 100 == 0) {
+            drawPath(step5Points, [[x, y]], results.path, leftCanvas, "blue");
+            await new Promise(r => setTimeout(r, 1));
+        }
+        if (results.fitness < bestLeftGenome.fitness) {
+            bestLeftGenome.fitness = results.fitness;
+            bestLeftGenome.path = [...results.path];
+            bestLeftGenome.chromosomes = [[x, y]];
+        }
+    }
+    document.getElementById('leftresults').innerHTML = "<br>Path Improvement = "+ Math.round((step5StartingLength- bestLeftGenome.fitness)* 100) / 100;
+    drawPath(step5Points, bestLeftGenome.chromosomes, bestLeftGenome.path, leftCanvas, "blue");
+}
+
+//RIGHT CANVAS
+var rightCanvas = document.getElementById("step5canvasright");
+var bestRightGenome;
+
+rightCanvas.addEventListener("mouseup", function (e) {
+    if (typeof e === 'object') {
+        switch (e.button) {
+            case 0:
+                if (rightCanvas.style.boxShadow != "rgb(0, 251, 0) 0px 0px 20px 5px") {
+                    if (leftCanvas.style.boxShadow == "rgb(0, 251, 0) 0px 0px 20px 5px") {
+                        middleCanvas.style = "box-shadow: 0px 0px 20px 5px rgb(255, 251, 0)";
+                        rightCanvas.style = "box-shadow: 0px 0px 20px 5px rgb(0, 251, 0);";
+                    } else {
+                        rightCanvas.style = "box-shadow: 0px 0px 20px 5px rgb(0, 251, 0);";
+                    }
+                    step5RightCanvasGenetic();
+                }
+                return;
+        }
+    }
+});
+
+async function step5RightCanvasGenetic() {
+    bestRightGenome = new Genome();
+    let start = prims([], step5Points);
+    bestRightGenome.path = [...start.path];
+    bestRightGenome.fitness = start.fitness;
+    for (var i = 0; i < STEP5POPULATION; i++) {
+        var [x, y] = [Math.floor(Math.random() * (300 + 1 - 150) + 150), Math.floor(Math.random() * (300 + 1))]; //left side
+        var results = prims([[x, y]], step5Points);
+        if (i % 100 == 0) {
+            drawPath(step5Points, [[x, y]], results.path, rightCanvas, "blue");
+            await new Promise(r => setTimeout(r, 1));
+        }
+        if (results.fitness < bestRightGenome.fitness) {
+            bestRightGenome.fitness = results.fitness;
+            bestRightGenome.path = [...results.path];
+            bestRightGenome.chromosomes = [[x, y]];
+        }
+    }
+    document.getElementById('rightresults').innerHTML = "<br>Path Improvement = "+ Math.round((step5StartingLength- bestRightGenome.fitness)* 100) / 100;
+    drawPath(step5Points, bestRightGenome.chromosomes, bestRightGenome.path, rightCanvas, "blue");
+}
+
+//MIDDLE CANVAS
+var middleCanvas = document.getElementById("canvascombined");
+
+middleCanvas.addEventListener("mouseup", function (e) {
+    if (typeof e === 'object') {
+        switch (e.button) {
+            case 0:
+                displayMiddleCanvas();
+                return;
+        }
+    }
+});
+
+function displayMiddleCanvas() {
+    let added_points = bestLeftGenome.chromosomes.concat(bestRightGenome.chromosomes);
+    let result = prims(added_points, step5Points)
+    drawPath(step5Points, added_points, result.path, middleCanvas, "grey")
+    document.getElementById('middleresults').innerHTML = "<br>Path Improvement = "+ Math.round((step5StartingLength- result.fitness)* 100) / 100;
+}
+
+
+
+//STEP 5 shared
+function initializeStep5Points() {
+    resetCanvas(leftCanvas, []);
+    resetCanvas(rightCanvas, []);
+    resetCanvas(middleCanvas, []);
+    step5Points.splice(0, step5Points.length);
+    for (var i = 0; i < STEP5NUMBERPOINTS; i++) {
+        var [x, y] = [Math.floor(Math.random() * (300 + 1)), Math.floor(Math.random() * (300 + 1))];
+        step5Points.push([x, y]);
+    }
+    let results = prims([], step5Points);
+    step5StartingLength = results.fitness;
+    drawPath(step5Points, [], results.path, leftCanvas, "");
+    drawPath(step5Points, [], results.path, rightCanvas, "");
+    drawPath(step5Points, [], results.path, middleCanvas, "");
+}
+
+function drawPath(startingpoints, extrapoints, path, canvas, colour) {
+    resetCanvas(canvas, startingpoints);
+    for (let i = 0; i < extrapoints.length; i++) {
+        drawPoint(extrapoints[i][0], extrapoints[i][1], colour, canvas);
+    }
+    for (let i = 0; i < path.length; i++) {
+        connectPoints(path[i][0], path[i][1], canvas);
+    }
+}

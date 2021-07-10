@@ -182,6 +182,7 @@ function main() {
   createResultsTable();
   initializeStep3Points();
   initializeStep4Points();
+  initializeStep5Points()
 }
 
 
