@@ -229,7 +229,7 @@ var xValues = [];
 var CanvasMutation = document.getElementById("canvasmutation");
 var CanvasNoMutation = document.getElementById("canvasnomutation");
 var step4Vertices = [[200, 50], [50, 350], [350, 350]];
-var step4StartingLength;
+//var step4StartingLength;
 var STEP4GENERATIONS = 50;
 var STEP4POPULATION = 15;
 var step4Mutation = [];
@@ -248,7 +248,7 @@ function initializeStep4Points() {
     let results = prims([], step4Vertices);
     drawStep4Path([], results.path, CanvasMutation);
     drawStep4Path([], results.path, CanvasNoMutation);
-    step4StartingLength = Math.round(results.fitness * 100) / 100;
+    //step4StartingLength = Math.round(results.fitness * 100) / 100;
     //document.getElementById("step3fitness").innerHTML = "Starting Fitness: " + step3StartingLength + " pixels.";
     resetStep4Population(step4Mutation);
     resetStep4Population(step4NoMutation);
@@ -261,10 +261,10 @@ function resetStep4Population(population) {
     }
 }
 
-function drawStep4Path(extrapoint, path, canvas) {
+function drawStep4Path(extrapoint, path, canvas,colour) {
     resetCanvas(canvas, step4Vertices);
     for (let i = 0; i < extrapoint.length; i++) {
-        drawPoint(extrapoint[i][0], extrapoint[i][1], "purple", canvas);
+        drawPoint(extrapoint[i][0], extrapoint[i][1], colour, canvas);
     }
     for (let i = 0; i < path.length; i++) {
         connectPoints(path[i][0], path[i][1], canvas);
@@ -282,7 +282,7 @@ function createStep4Genome(population) {
 }
 
 function mutateStep4Genome(population, parent) {
-    console.log(parent);
+    //console.log(parent);
     let newGenome = new Genome();
     let angle = Math.floor(Math.random() * 361);
     let x = parent.chromosomes[0][0] + STEP4_MOVE_SIZE * Math.sin(angle * (Math.PI / 180));
@@ -312,10 +312,10 @@ async function step4NoMutationGenetic() {
                 createStep4Genome(step4NoMutation);
             }
             step4NoMutation.sort(function (a, b) { return a.fitness - b.fitness; });
-            drawStep4Path(step4NoMutation[0].chromosomes, step4NoMutation[0].path, CanvasNoMutation);
+            drawStep4Path(step4NoMutation[0].chromosomes, step4NoMutation[0].path, CanvasNoMutation,"rgba(0,0,255,1)");
             noMutation.push(step4NoMutation[0].fitness);
             myChart.update();
-            console.log(step4NoMutation[0].fitness);
+            //console.log(step4NoMutation[0].fitness);
             await new Promise(r => setTimeout(r, 30));
         }
         lockedstep4nomutation = true;
@@ -335,10 +335,10 @@ async function step4MutationGenetic() {
                 mutateStep4Genome(step4Mutation, step4Mutation[0]);
             }
             step4Mutation.sort(function (a, b) { return a.fitness - b.fitness; });
-            drawStep4Path(step4Mutation[0].chromosomes, step4Mutation[0].path, CanvasMutation);
+            drawStep4Path(step4Mutation[0].chromosomes, step4Mutation[0].path, CanvasMutation,"rgba(255,0,255,1)");
             withMutation.push(step4Mutation[0].fitness);
             myChart.update();
-            console.log(step4Mutation[0].fitness);
+            //console.log(step4Mutation[0].fitness);
             await new Promise(r => setTimeout(r, 30));
         }
         lockedstep4mutation = true;
@@ -350,6 +350,10 @@ CanvasNoMutation.addEventListener("mouseup", function (e) {
         switch (e.button) {
             case 0:
                 step4NoMutationGenetic();
+                if(document.getElementById("canvasmutation").style.boxShadow == "rgb(0, 251, 0) 0px 0px 20px 5px"){
+                    $("#step5").fadeIn("slow");
+                }
+                document.getElementById("canvasnomutation").style = "box-shadow: 0px 0px 20px 5px rgb(0, 251, 0);";
                 return;
         }
     }
@@ -360,13 +364,14 @@ CanvasMutation.addEventListener("mouseup", function (e) {
         switch (e.button) {
             case 0:
                 step4MutationGenetic();
+                if(document.getElementById("canvasnomutation").style.boxShadow == "rgb(0, 251, 0) 0px 0px 20px 5px"){
+                    $("#step5").fadeIn("slow");
+                }
+                document.getElementById("canvasmutation").style = "box-shadow: 0px 0px 20px 5px rgb(0, 251, 0);";
                 return;
         }
     }
 });
-
-
-
 
 
 
@@ -375,14 +380,14 @@ var myChart = new Chart("myChart", {
     data: {
         labels: xValues,
         datasets: [{
-            label: 'With Mutations',
+            label: 'Without Mutations',
             fill: false,
             lineTension: 0,
             borderColor: "rgba(0,0,255,1)",
             data: noMutation,
 
         }, {
-            label: 'Without Mutations',
+            label: 'With Mutations',
             fill: false,
             lineTension: 0,
             borderColor: "rgba(255,0,255,1)",
@@ -404,7 +409,7 @@ var myChart = new Chart("myChart", {
                 ticks: { min: 550, max: 600 },
                 scaleLabel: {
                     display: true,
-                    labelString: 'Leading Fitness'
+                    labelString: 'Shortest Path Length'
                 }
             }],
             xAxes: [{

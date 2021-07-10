@@ -88,12 +88,6 @@
       height: 40px;
       display: block;
     }
-
-
-
-
-
-
   </style>
   <script>
 
@@ -162,21 +156,65 @@
             <p>Instead of replacing the badly performing genomes with completely new genomes, they instead will be
               replaced with mutated versions of the leading genomes.</p>
             <p>A mutation is a small random movement of the <b>Parents</b> chromosome. Click the graph to see how this
-              effects the leading genome fitness over time.</p>
-            <canvas id="myChart" style="margin: 0 auto; width:100%;max-width:600px; background-color:white;right: 50%; box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
-        
-            <span>
-              <canvas width="400" height="400" id="canvasmutation"
-              style="margin: 30px; right: 50%;"></canvas>
-              <canvas width="400" height="400" id="canvasnomutation"
-              style="margin: 30px; right: 50%;"></canvas>
-            </span>
-         
+              effects the leading genome fitness over time (Remember: Lower path length is favourable!).</p>
+            <canvas id="myChart"
+              style="margin: 0 auto; width:100%;max-width:600px; background-color:whitesmoke;right: 50;"></canvas>
+
+
+            <div class="grid-container"
+              style="margin-top: 15px; display: grid; grid-template-columns: auto auto auto auto;">
+              <div></div>
+              <div>
+                <h3>With Mutations</h3>
+                <canvas width="400" height="400" id="canvasmutation"
+                  style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
+              </div>
+              <div>
+                <h3>Without Mutations</h3>
+                <canvas width="400" height="400" id="canvasnomutation"
+                  style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
+              </div>
+              <div></div>
+            </div>
+            <p><br>Click the canvas's to re-run the simulation! Although it is common for both variations to reach a
+              similair path length; the mutation curve is
+              smoother and more consistent. </p>
+            <p>Genetic Algorithms typically employ a mixture of both to get the best of both worlds.</p>
+          </div>
+          <div style="background-color: #101935; height: 40px;"></div>
+          <div id="step5" style="display: none;">
+            <h2>Step 5: Genetic Breeding</h2>
+            <h3>The final attribute of our Genetic Algorothm is the ability to combine the best results from each
+              generation.</h3>
+            <p>With our current simple example, combining the <b>Chromosomes</b> (extra points) of the leading genomes
+              isnt applicable as the ideal solution only has a single extra point added. </p>
+            <p>With more realistic examples, such as the one pictured below, it is benefical to combine the <b>Chromosomes</b> of the leading genomes to hopefully 
+              reduce the path length even further. 
+            </p>
+            <p>In this simple example; click the canvas's on the right and left to find the best genome in each population, then combine them to see the result.</p>
             
-         
-
-
-
+            <div class="grid-container"
+              style="margin-top: 15px; display: grid; grid-template-columns: auto auto auto auto auto;">
+              <div></div>
+              <div>
+                <h3>Parent One</h3>
+                <canvas width="300" height="300" id="step5canvas1"
+                  style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
+                <h4><br>Path Length = 21</h4>
+              </div>
+              <div>
+                <h3>Child</h3>
+                <canvas width="300" height="300" id="canvascombined"></canvas>
+                <h4><br>Path Length = 21</h4>
+              </div>
+              <div>
+                <h3>Parent Two</h3>
+                <canvas width="300" height="300" id="step5canvas2"
+                  style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);"></canvas>
+                  <h4><br>Path Length = 21</h4>
+              </div>
+              <div></div>
+            </div>
           </div>
         </div>
         <br><br><br><br><br><br><br>
