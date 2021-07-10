@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+  <title>Kane Alexander - Powergrid Optimization</title>
+  <link rel="shortcut icon" href="https://icon-library.com/images/tech-icon/tech-icon-9.jpg" />
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,6 +90,10 @@
       height: 40px;
       display: block;
     }
+    .reset :hover{
+      cursor: grab;
+      opacity: 0.3;
+    }
   </style>
   <script>
 
@@ -117,6 +123,12 @@
           <br><br>
           <p id="step1fitness"></p>
           <p id="step1currentfitness"></p>
+          
+          <span style="margin-top: 15vw;" class="reset" id='step1reload' onclick="initializeStep1Points()"><i class="fas fa-redo"
+            style="margin: 20px; font-size:40px; color: black;"></i></span>
+
+
+
           <div style="background-color: #101935; height: 40px;"></div>
           <div id="step2" style="display: none;">
             <h2>Step 2: Random Genetic Algoritm</h2>
@@ -131,6 +143,14 @@
               <span style="position: fixed; margin-left: 20px;" id="step2results"></span>
             </div>
             <p id="step2fitness"></p>
+            <p><br>Click the canvas to run the simulation again!<br></p>
+
+
+
+
+
+
+
           </div>
           <div style="background-color: #101935; height: 40px;"></div>
           <div id="step3" style="display: none;">
@@ -143,7 +163,7 @@
               style="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0); right: 50%;"></canvas>
             <p id="step3fitness"></p>
             <table id="step3results"></table>
-
+            <p><br>Click the canvas to run the simulation again!<br></p>
           </div>
           <div style="background-color: #101935; height: 40px;"></div>
           <div id="step4" style="display: none;">
@@ -180,19 +200,23 @@
               similair path length; the mutation curve is
               smoother and more consistent. </p>
             <p>Genetic Algorithms typically employ a mixture of both to get the best of both worlds.</p>
+            <p><br>Click the canvas to run the simulation again!<br></p>
           </div>
+          
           <div style="background-color: #101935; height: 40px;"></div>
-          <div id="step5" style="display:none">
+          <div id="step5" style="display: none;">
             <h2>Step 5: Genetic Breeding</h2>
             <h3>The final attribute of our Genetic Algorothm is the ability to combine the best results from each
               generation.</h3>
             <p>With our current simple example, combining the <b>Chromosomes</b> (extra points) of the leading genomes
               isnt applicable as the ideal solution only has a single extra point added. </p>
-            <p>With more realistic examples, such as the one pictured below, it is benefical to combine the <b>Chromosomes</b> of the leading genomes to hopefully 
-              reduce the path length even further. 
+            <p>With more realistic examples, such as the one pictured below, it is benefical to combine the
+              <b>Chromosomes</b> of the leading genomes to hopefully
+              reduce the path length even further.
             </p>
-            <p>In this simple example; click the canvas's on the right and left to find the best genome in each population, then combine them to see the result.</p>
-            
+            <p>In this simple example; click the canvas's on the right and left to find the best genome in each
+              population, then combine them to see the result.</p>
+
             <div class="grid-container"
               style="margin-top: 15px; display: grid; grid-template-columns: auto auto auto auto auto;">
               <div></div>
@@ -209,21 +233,60 @@
               <div>
                 <h3>Parent Two</h3>
                 <canvas width="300" height="300" id="step5canvasright"></canvas>
-                  <h4 id='rightresults'><br>Path Improvement = -</h4>
+                <h4 id='rightresults'><br>Path Improvement = -</h4>
               </div>
               <div></div>
             </div>
-            <br><button onclick = "initializeStep5Points()">Click to Reset!</button>
+            <span style="margin-top: 15vw;" class="reset" id='step5reload' onclick="initializeStep5Points()"><i class="fas fa-redo"
+              style="margin: 20px; font-size:40px; color: black;"></i></span>
           </div>
+
           <div style="background-color: #101935; height: 40px;"></div>
-          <div id="step6" style="display:none">
+
+          <div id="step6" style="display: none;">
             <h2>The Final Algorithm</h2>
             <h3>Coming Soon....</h3>
+
+            <div class="grid-container"
+              style="margin-top: 15px; display: grid; grid-template-columns: auto 300px 300px 300px auto;">
+              <div></div>
+              <div>
+                <span class="rangetext" id="">Number of Genomes: </span>
+                <Input class="range" id="" type="range" value="10" min="10" max="200" onChange=""
+                  onmousemove="" style ="width:250px"></Input>
+                  <br><br>
+                  <span class="rangetext" id="">Number of Generations:</span>
+                <Input class="range" id="" type="range" value="10" min="10" max="200" onChange=""
+                  onmousemove="" style ="width:250px"></Input>
+                  
+              </div>
+              <div>
+                <span class="rangetext" id="">Number of Points:</span>
+                <Input class="range" id="" type="range" value="10" min="10" max="200" onChange=""
+                  onmousemove="" style ="width:250px"></Input>
+                  <br><br>
+                  <span class="rangetext" id="">Survival Rate:</span>
+                <Input class="range" id="" type="range" value="10" min="10" max="200" onChange=""
+                  onmousemove="" style ="width:250px"></Input>
+              </div>
+              <div>
+                <span class="rangetext" id="">Move Point Mutation:</span>
+                <Input class="range" id="" type="range" value="10" min="10" max="200" onChange=""
+                  onmousemove="" style ="width:250px"></Input>
+                  <br><br>
+                  <span class="rangetext" id="">Add/Remove Point Mutation:</span>
+                <Input class="range" id="" type="range" value="10" min="10" max="200" onChange=""
+                  onmousemove="" style ="width:250px"></Input>
+              </div>
+              <div></div>
+            </div>
+            <canvas width="1000" height="500" id="finalcanvas"></canvas>
+          </div>
+
+
+
+          <div style="background-color: #101935; height: 140px;"></div>
         </div>
-      </div>
-        <br><br><br><br><br><br><br>
-      
-      <!--Game Page-->
       </div>
     </div>
 
@@ -286,92 +349,31 @@
         Fight the Algorithm
       </span>
     </label>
-
-    <!--
-    <input name="nav" type="radio" class="contact-radio" id="contact" />
-    <div class="page contact-page">
-      <div class="page-contents">
-        <h1>Contact</h1>
-        <p>Eaque accusamus magnam error unde nam, atque provident omnis fugiat quam necessitatibus vel nulla sed
-          quibusdam fuga veritatis assumenda alias quidem asperiores?</p>
-        <p><a href="#">Get in touch</a></p>
-      </div>
-    </div>
-    <label class="nav" for="contact">
-      <span>
-        Learn How it Works
-      </span>
-
-    </label>
-    -->
   </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <!--
-  <h2 id ="startingresults"><br>Starting Path Length is: </h2>
-  <div class="grid-container canvas-container">
-    <div><h1>Your Canvas</h1>
-      <h2 id="player_results"></h2>
-      <canvas width="500" height="500" id="playercanvas">
-      </canvas>
-    </div>
-
-    <div class="or-spacer">
-        <span><i class="fa fa-info-circle" style="font-size:24px; color: white"></i></span>
-    </div>
-
-    <div><h1>Algorithm Canvas</h1>
-      <h2 id="alg_results">Current Fitness: - pixels. </h2> 
-      <canvas width="500" height="500" id="algorithmcanvas">
-      </canvas>
-      <h2 id="alg_results2">Generation: 0.</h2>
-      
-    </div>
-  </div>
-
+  <!-- Footer Start -->
   <div class="footer">
     <div class="container-fluid">
-        <div class="container">
-            <div class="footer-info">
-                <h2>Kane Alexander</h2>
-                <div class="footer-menu">
-                    <p>0474131119</p>
-                    <p>kanealexander3@gmail.com</p>
-                    <a href="https://www.linkedin.com/in/kane-alexander-08131b216/">
-                        <p>LinkedIn</p>
-                    </a>
-                </div>
-            </div>
+      <div class="container">
+        <div class="footer-info">
+          <h2>Kane Alexander</h2>
+          <div class="footer-menu">
+            <p>0474131119</p>
+            <p>kanealexander3@gmail.com</p>
+            <a href="https://www.linkedin.com/in/kane-alexander-08131b216/">
+              <p>LinkedIn</p>
+            </a>
+          </div>
+
         </div>
+      </div>
     </div>
-</div>
--->
+  </div>
+
+
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="common/js/main.js"> </script>
 <script src="common/js/game.js"> </script>
 <script src="common/js/teaching.js"> </script>
+<script src="common/js/geneticalgorithm.js"> </script>

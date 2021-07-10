@@ -9,6 +9,7 @@ var step1PlayerPoint = [];
 var step1StartingLength;
 
 function initializeStep1Points() {
+    step1Canvas.style ="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);";
     let results = prims([], exampleVertices);
     drawPath(exampleVertices, [], results.path, step1Canvas, "");
     step1StartingLength = Math.round(results.fitness * 100) / 100;
@@ -50,7 +51,9 @@ var step2StartingLength;
 
 
 function initializeStep2Points() {
+    step2Canvas.style ="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);";
     let results = prims([], exampleVertices);
+    document.getElementById("step2results").innerHTML ="";
     drawPath(exampleVertices, [], results.path, step2Canvas, "");
     step2StartingLength = Math.round(results.fitness * 100) / 100;
     document.getElementById("step2fitness").innerHTML = "Starting Fitness: " + step2StartingLength + " pixels.";
@@ -97,6 +100,7 @@ var step3GenomesKilled = 2;
 var step3Population = [];
 
 function initializeStep3Points() {
+    step3Canvas.style ="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);";
     let results = prims([], exampleVertices);
     drawPath(exampleVertices, [], results.path, step3Canvas, "");
     step3StartingLength = Math.round(results.fitness * 100) / 100;
@@ -192,6 +196,8 @@ function initializeStep4Points() {
     }
     myChart.update();
     let results = prims([], exampleVertices);
+    CanvasNoMutation.style ="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);";
+    CanvasMutation.style ="box-shadow: 0px 0px 20px 5px rgb(255, 251, 0);";
     drawPath(exampleVertices, [], results.path, CanvasNoMutation, "");
     drawPath(exampleVertices, [], results.path, CanvasMutation, "");
 }
@@ -484,7 +490,7 @@ middleCanvas.addEventListener("mouseup", function (e) {
 function displayMiddleCanvas() {
     let added_points = bestLeftGenome.chromosomes.concat(bestRightGenome.chromosomes);
     let result = prims(added_points, step5Points)
-    drawPath(step5Points, added_points, result.path, middleCanvas, "blue")
+    drawPath(step5Points, added_points, result.path, middleCanvas, "purple")
     document.getElementById('middleresults').innerHTML = "<br>Path Improvement = " + Math.round((step5StartingLength - result.fitness) * 100) / 100;
 }
 

@@ -1,39 +1,8 @@
-//PLAYERCHANGEABLE-------------------------------------------------------------------
-
-//GENOME CLASSIC
-var GENOMES_POPULATION = 10;
-var SURVIVAL_RATE = 10; // PERCENTAGE
-
-
-//GENOME MUTATION
-var STARTINGPOINTS = 10;
-var NUMGENERATIONS = 200;
-var NEWPOINT_MUTATION = 40; // PERCENTAGE
-var MOVEPOINT_MUTATION = 50; // PERCENTAGE
-var REMOVEPOINT_MUTATION = 30; // PERCENTAGE
-var MUTATIONMOVE_SIZE = 1;
-
-//AESTHETIC 
-var WAITTIME = 0;
-
-
-
 //GENETIC ALGORITHM---------------------------------------------------------------------
 class Genome {
   path = [];
   chromosomes = [];
   fitness = 0;
-}
-
-function CreateNewPopulation(population) {
-  population.splice(0,population.length);
-  var startingValues = prims([],startingVertices);
-  for (var i = 0; i < GENOMES_POPULATION; i++) {
-    let newGenome = new Genome();
-    newGenome.path = [...startingValues.path];
-    newGenome.fitness = startingValues.fitness;
-    population.push(newGenome);
-  }
 }
 
 

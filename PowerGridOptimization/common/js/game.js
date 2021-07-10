@@ -8,6 +8,25 @@ var playerVertices = [];
 var game_population = [];
 var playerscore;
 
+//PLAYERCHANGEABLE-------------------------------------------------------------------
+
+//GENOME CLASSIC
+var GENOMES_POPULATION = 10;
+var SURVIVAL_RATE = 10; // PERCENTAGE
+
+
+//GENOME MUTATION
+var STARTINGPOINTS = 10;
+var NUMGENERATIONS = 200;
+var NEWPOINT_MUTATION = 40; // PERCENTAGE
+var MOVEPOINT_MUTATION = 50; // PERCENTAGE
+var REMOVEPOINT_MUTATION = 30; // PERCENTAGE
+var MUTATIONMOVE_SIZE = 1;
+
+//AESTHETIC 
+var WAITTIME = 0;
+
+
 //INITIALIZING FUNCTIONS-------------------------------------------------------------
 function initializeGamePoints() {
   startingVertices.splice(0,startingVertices.length);
@@ -127,7 +146,7 @@ function fightResults(generation) {
   }
 }
 
-//GENETIC ALGORITHM
+//GENETIC ALGORITHM FUNCTIONS-----------------------------------------------------------------------------------
 async function GeneticAlgorithm() {
     CreateNewPopulation(game_population);
     var results = true;
@@ -145,6 +164,17 @@ async function GeneticAlgorithm() {
       }else if (generation == NUMGENERATIONS && results){
         fightResults(-1);
       }
+    }
+  }
+
+  function CreateNewPopulation(population) {
+    population.splice(0,population.length);
+    var startingValues = prims([],startingVertices);
+    for (var i = 0; i < GENOMES_POPULATION; i++) {
+      let newGenome = new Genome();
+      newGenome.path = [...startingValues.path];
+      newGenome.fitness = startingValues.fitness;
+      population.push(newGenome);
     }
   }
 
