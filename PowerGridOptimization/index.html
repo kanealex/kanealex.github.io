@@ -243,7 +243,7 @@
 
           <div style="background-color: #101935; height: 40px;"></div>
 
-          <div id="step6" style="display: none;">
+          <div id="step6" style="display:;">
             <h2>The Final Algorithm</h2>
             <h3>Coming Soon....</h3>
 
@@ -251,37 +251,40 @@
               style="margin-top: 15px; display: grid; grid-template-columns: auto 300px 300px 300px auto;">
               <div></div>
               <div>
-                <span class="rangetext" id="">Number of Genomes: </span>
-                <Input class="range" id="" type="range" value="10" min="10" max="200" onChange=""
-                  onmousemove="" style ="width:250px"></Input>
+                <span class="rangetext" id="numGenomes">Number of Genomes: 40</span>
+                <Input class="range" id="numGenomesValue" type="range" value="40" min="10" max="50" onChange="algorithmSlider(this.value,'numGenomes','Number of Genomes: ','')"
+                onmousemove="algorithmSlider(this.value,'numGenomes','Number of Genomes: ','')" style ="width:250px"></Input>
                   <br><br>
-                  <span class="rangetext" id="">Number of Generations:</span>
-                <Input class="range" id="" type="range" value="10" min="10" max="200" onChange=""
-                  onmousemove="" style ="width:250px"></Input>
-                  
+                  <span class="rangetext" id="numGenerations">Number of Generations: 100</span>
+                <Input class="range" id="numGenerationsValue" type="range" value="100" min="10" max="200" onChange="algorithmSlider(this.value,'numGenerations','Number of Generations: ','')"
+                onmousemove="algorithmSlider(this.value,'numGenerations','Number of Generations: ','')" style ="width:250px"></Input>
               </div>
               <div>
-                <span class="rangetext" id="">Number of Points:</span>
-                <Input class="range" id="" type="range" value="10" min="10" max="200" onChange=""
-                  onmousemove="" style ="width:250px"></Input>
+                <span class="rangetext" id="numPoints">Number of Points: 30</span>
+                <Input class="range" id="numPointsValue" type="range" value="30" min="10" max="50" onChange="algorithmSlider(this.value,'numPoints','Number of Points: ','')"
+                onmousemove="algorithmSlider(this.value,'numPoints','Number of Points: ','')" style ="width:250px"></Input>
                   <br><br>
-                  <span class="rangetext" id="">Survival Rate:</span>
-                <Input class="range" id="" type="range" value="10" min="10" max="200" onChange=""
-                  onmousemove="" style ="width:250px"></Input>
+                  <span class="rangetext" id="survivalRate">Survival Rate: 20%</span>
+                <Input class="range" id="survivalRateValue" type="range" value="20" min="0" max="100" onChange="algorithmSlider(this.value,'survivalRate','Survival Rate: ','%')"
+                onmousemove="algorithmSlider(this.value,'survivalRate','Survival Rate: ','%')" style ="width:250px"></Input>
               </div>
               <div>
-                <span class="rangetext" id="">Move Point Mutation:</span>
-                <Input class="range" id="" type="range" value="10" min="10" max="200" onChange=""
-                  onmousemove="" style ="width:250px"></Input>
+                <span class="rangetext" id="movePoint">Move Point Mutation: 50%</span>
+                <Input class="range" id="movePointValue" type="range" value="50" min="0" max="100" onChange="algorithmSlider(this.value,'movePoint','Move Point Mutation: ','%')"
+                  onmousemove="algorithmSlider(this.value,'movePoint','Move Point Mutation: ','%')" style ="width:250px"></Input>
                   <br><br>
-                  <span class="rangetext" id="">Add/Remove Point Mutation:</span>
-                <Input class="range" id="" type="range" value="10" min="10" max="200" onChange=""
-                  onmousemove="" style ="width:250px"></Input>
+                  <span class="rangetext" id="changePoint">Add/Remove Point Mutation: 50%</span>
+                <Input class="range" id="changePointValue" type="range" value="50" min="0" max="100" onChange="algorithmSlider(this.value,'changePoint','Add/Remove Point Mutation: ','%')"
+                  onmousemove="algorithmSlider(this.value,'changePoint','Add/Remove Point Mutation: ','%')" style ="width:250px"></Input>
               </div>
               <div></div>
             </div>
+            <div>
+            <br><button onclick= "updateGame()">Click to run!</button></div>  <br>
             <canvas width="1000" height="500" id="finalcanvas"></canvas>
           </div>
+          <canvas id="algorithmChart"
+          style="margin: 0 auto; width:100%;max-width:800px; background-color:whitesmoke;"></canvas>
 
 
 

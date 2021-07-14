@@ -181,12 +181,12 @@ async function GeneticAlgorithm() {
   
 function SurvivaloftheFittest(population) {
   //Kills of SURVIVAL_RATE, breeds remaining genomes
-  var survivalIndex = parseInt(population.length * (SURVIVAL_RATE / 100));
+  let survivalIndex = parseInt(population.length * (SURVIVAL_RATE / 100));
   population.splice(survivalIndex, population.length - survivalIndex);
   for (var i = population.length; i < GENOMES_POPULATION; i++) {
-    var newChromosomes = [];
-    var mother = Math.floor(Math.random() * (survivalIndex));
-    var father = Math.floor(Math.random() * (survivalIndex));
+    let newChromosomes = [];
+    let mother = Math.floor(Math.random() * (survivalIndex));
+    let father = Math.floor(Math.random() * (survivalIndex));
     for (var j = 0; j < population[mother].chromosomes.length; j++) {
       if (Math.floor(Math.random() * (101)) > 50) {
         newChromosomes.push([...population[mother].chromosomes[j]]);
@@ -197,7 +197,7 @@ function SurvivaloftheFittest(population) {
         newChromosomes.push([...population[father].chromosomes[j]]);
       }
     }
-    var genome = new Genome();
+    let genome = new Genome();
     genome.chromosomes = [...newChromosomes];
     population.push(genome);
   }
